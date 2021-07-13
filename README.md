@@ -25,14 +25,9 @@ See LICENSE file.
 Directory Structure
 -------------------
 
- * `precompiled` contains the downloaded binaries
- * `build` contains the locally compiled binaries
- * `sources` contains the source code of the binaries
- * `datasets` contains the datasets required for the binaries
- * `scripts` contains scripts to run the experiments
- * `bin` points to the used binaries for the evaluation (you can use 
-   `scripts/toggle_build.sh` to switch between precompiled and locally 
-   compined binaries)
+ * `evaluation_script` contains all the scripts that will be used to generate the motivation 
+    and evaluation results
+ * `resources` has all the configuration files used in our experiments
 
 
 Hardware Dependencies
@@ -74,26 +69,6 @@ Just clone the artifact on the machine you want to run it on.
 ```
 $ vmitosis-asplos21-artifact/scripts/deploy.sh
 ```
-
-Pre-Compiled Binaries
----------------------
-
-This repository also contains the pre-compiled binaries under `vmitosis-asplos21-artifact/precompiled.`
-There are several binaries available:
-
- * `bench_*` are the benchmarks used in the paper
- * `page_table_dump/numactl/` are helper utilities
- * `mini_probe/micro_probe` are used to discover NUMA topolgy
- * `linux-*.deb` are the linux kernel image and headers with vMitosis modifications
-
-If you only plan to use the pre-compiled binaries, install vMitosis kernel headers and image, and
-boot your target machine with vMitosis kernel before running any experiments.
-
-```
-$ dpkg -i precompiled/linux-headers-4.17.0-mitosis+_4.17.0-mitosis+-3_amd64.deb
-$ dpkg -i precompiled/linux-image-4.17.0-mitosis+_4.17.0-mitosis+-3_amd64.deb
-```
-
 
 Obtaining Source Code and Compile
 ---------------------------------
@@ -148,4 +123,23 @@ in the XML files as follows:
 ```
 
 Refer to `nuKSM-pact21-artifact/resources/vm_xmls/` for all VM configurations used in the paper.
+
+Generate Motivation Data
+------------------------
+
+```
+$ cd evaluation_script
+$ bash evaluation_script/complete_evaluation_fairness.sh KSM_OFF 
+$ bash evaluation_script/complete_evaluation_fairness.sh KSM_ON
+```
+
+
+Generate Evaluation Data
+------------------------
+
+
+```
+$ cd evaluation_script
+$ bash evaluation_script/complete_evaluation_fairness.sh nuKSM
+```
 
