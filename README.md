@@ -64,12 +64,6 @@ Deploying
 
 Just clone the artifact on the machine you want to run it on.
 
-**For deploying on a local machine only.**
-
-```
-$ vmitosis-asplos21-artifact/scripts/deploy.sh
-```
-
 Obtaining Source Code and Compile
 ---------------------------------
 
