@@ -1,0 +1,6 @@
+#!/bin/bash
+
+#Usage ssh_script <host> <ssh user> <ssh password> "<script to run>"
+
+#echo "sshpass -p $3 ssh $2@$1 \"$4\""
+sshpass -p $3 ssh $2@$1 "$4"

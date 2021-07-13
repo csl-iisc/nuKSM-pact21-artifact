@@ -1,0 +1,14 @@
+#!/bin/bash
+  
+#Usage scp_script <host> <ssh user> "<path_of_remote>" <ssh password> "<local_path>"
+
+#set timeout 60
+
+echo $1
+echo $2
+echo $3
+echo $4
+echo $5 
+
+sshpass -p "iamakash" scp $5 $2@$1:$3
+
