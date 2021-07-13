@@ -1,0 +1,21 @@
+<network>
+  <name>network-01</name>
+  <uuid>7062e283-a99d-470d-8664-0f655692e4d1</uuid>
+  <forward mode='nat'>
+    <nat>
+      <port start='1024' end='65535'/>
+    </nat>
+  </forward>
+  <bridge name='virbr100' stp='on' delay='0'/>
+  <mac address='52:54:00:ef:12:a3'/>
+  <ip address='192.168.123.1' netmask='255.255.255.0'>
+    <dhcp>
+      <range start='192.168.123.2' end='192.168.123.254'/>
+      <host mac='52:54:00:78:47:9d' name='ubuntu_numa_1' ip='192.168.123.149'/>
+      <host mac='52:54:00:91:ef:df' name='ubuntu_numa_2' ip='192.168.123.228'/>
+      <host mac='52:54:00:99:cb:ed' name='ubuntu_numa_3' ip='192.168.123.208'/>
+      <host mac='52:54:00:1e:3e:0d' name='ubuntu_numa_4' ip='192.168.123.231'/>
+    </dhcp>
+  </ip>
+</network>
+
