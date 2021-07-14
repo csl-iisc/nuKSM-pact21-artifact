@@ -103,37 +103,45 @@ Once installed, use the following script to prepare three VM configuration files
 4. <numatune> </numatune> -- to setup the number of guest NUMA nodes (required only for **numa-visible.xml**)
 5. <cpu><numa> </numa></cpu> -- to bind vCPUs to guest NUMA nodes (required only for **numa-visible.xml**)
 ```
-
-The guest OS needs to be booted with vmitosis kernel image. The same can also be configured with "os" tag
-in the XML files as follows:
-```
-  <os>
-    <type arch='x86_64' machine='pc-i440fx-eoan-hpb'>hvm</type>
-    <kernel>/boot/vmlinuz-5.4.0-nuKSM+</kernel>
-    <initrd>/boot/initrd.img-5.4.0-nuKSM+</initrd>
-    <cmdline>console=ttyS0 root=/dev/sda1</cmdline>
-    <boot dev='hd'/>
-  </os>
-```
-
 Refer to `nuKSM-pact21-artifact/resources/vm_xmls/` for all VM configurations used in the paper.
 
-Generate Motivation Data
-------------------------
+Generate Data For Figures
+-------------------------
+Edit the /etc/default/grub file to change the GRUB_DEFAULT
+```
+GRUB_DEFAULT="Advanced options for Ubuntu>Ubuntu, with Linux 5.4.0
+```
 
+Run update-grub
+```
+$ sudo update-grub
+```
+
+Reboot the machine
+```
+$ sudo reboot
+```
+
+After rebooting, now we shall run the benchmarks with the following scripts
 ```
 $ cd evaluation_script
-$ bash evaluation_script/complete_evaluation_fairness.sh KSM_OFF 
-$ bash evaluation_script/complete_evaluation_fairness.sh KSM_ON
+$ bash complete_evaluation_fairness.sh KSM_OFF 
+$ bash complete_evaluation_fairness.sh KSM_ON
 ```
 
+Now edit the /etc/default/grub file to change the 
+Comment all lines with 
+```
+GRUB_DEFAULT=
+```
+Add 
+```
+GRUB_DEFAULT="Advanced options for Ubuntu>Ubuntu, with Linux 5.4.0+"
+```
 
-Generate Evaluation Data
-------------------------
-
-
+Now we have to run the following script to run the benchmarks with nuKSM
 ```
 $ cd evaluation_script
-$ bash evaluation_script/complete_evaluation_fairness.sh nuKSM
+$ bash complete_evaluation_fairness.sh nuKSM
 ```
 
