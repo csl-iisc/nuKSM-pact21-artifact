@@ -1,3 +1,4 @@
+unlink  configure_ksm_at_begining.sh
 if [[ ${1} == "" ]]; then
     echo "Usage: ${0} [KSM_ON/KSM_OFF/nuKSM]"
     exit 1
@@ -17,45 +18,45 @@ FOLDER="./collections_experimnent_data/RESULTS/"
 TIME_LOG_FILE="timelog.log"
 #echo ${FOLDER}${FOLDER_EXTRA}
 
-start_time=$(date +%s)
-mkdir -p ${FOLDER}
-cd config 
-unlink config.sh
-ln -s config_chisel1_xsbench.sh config.sh
-cd ..
-./run_real.sh
-mkdir -p ${FOLDER}/EXP01_XSBENCH/
-cp -R data_collections ${FOLDER}/EXP01_XSBENCH/${FOLDER_EXTRA}
-rm -rf data_collections/*
-end_time=$(date +%s)
-echo "EXP01_XSBENCH : $(($end_time-$start_time))" > ${TIME_LOG_FILE}
-sleep 10
+#start_time=$(date +%s)
+#mkdir -p ${FOLDER}
+#cd config 
+#unlink config.sh
+#ln -s config_chisel1_xsbench.sh config.sh
+#cd ..
+#./run_real.sh
+#mkdir -p ${FOLDER}/EXP01_XSBENCH/
+#cp -R data_collections ${FOLDER}/EXP01_XSBENCH/${FOLDER_EXTRA}
+#rm -rf data_collections/*
+#end_time=$(date +%s)
+#echo "EXP01_XSBENCH : $(($end_time-$start_time))" >> ${TIME_LOG_FILE}
+#sleep 10
 
-start_time=$(date +%s)
-cd config
-unlink config.sh 
-ln -s config_chisel1_npb-cg.C.x.sh config.sh
-cd ..
-./run_real.sh
-mkdir -p ${FOLDER}/EXP03_CG/
-cp -R data_collections ${FOLDER}/EXP03_CG/${FOLDER_EXTRA}
-rm -rf data_collections/*
-end_time=$(date +%s)
-echo "EXP03_CG: $(($end_time-$start_time))" > ${TIME_LOG_FILE}
-sleep 10
+#start_time=$(date +%s)
+#cd config
+#unlink config.sh 
+#ln -s config_chisel1_npb-cg.C.x.sh config.sh
+#cd ..
+#./run_real.sh
+#mkdir -p ${FOLDER}/EXP03_CG/
+#cp -R data_collections ${FOLDER}/EXP03_CG/${FOLDER_EXTRA}
+#rm -rf data_collections/*
+#end_time=$(date +%s)
+#echo "EXP03_CG: $(($end_time-$start_time))" >> ${TIME_LOG_FILE}
+#sleep 10
 
-start_time=$(date +%s)
-cd config
-unlink config.sh 
-ln -s config_chisel1_sysbench_mysql.sh config.sh
-cd ..
-./run_ycsb.sh
-mkdir -p ${FOLDER}/EXP02_SYSBENCHMYSQL/
-cp -R data_collections ${FOLDER}/sysbench-mysql/${FOLDER_EXTRA}
-rm -rf data_collections/*
-end_time=$(date +%s)
-echo "EXP02_SYSBENCHMYSQL: $(($end_time-$start_time))" > ${TIME_LOG_FILE}
-sleep 10 
+#start_time=$(date +%s)
+#cd config
+#unlink config.sh 
+#ln -s config_chisel1_sysbench_mysql.sh config.sh
+#cd ..
+#./run_ycsb.sh
+#mkdir -p ${FOLDER}/EXP02_SYSBENCHMYSQL/
+#cp -R data_collections ${FOLDER}/EXP02_SYSBENCHMYSQL/${FOLDER_EXTRA}
+#rm -rf data_collections/*
+#end_time=$(date +%s)
+#echo "EXP02_SYSBENCHMYSQL: $(($end_time-$start_time))" >> ${TIME_LOG_FILE}
+#sleep 10 
 
 start_time=$(date +%s)
 cd config
@@ -67,7 +68,7 @@ mkdir -p ${FOLDER}/EXP04_BTREE/
 cp -R data_collections ${FOLDER}/EXP04_BTREE/${FOLDER_EXTRA}
 rm -rf data_collections/*
 end_time=$(date +%s)
-echo "EXP04_BTREE: $(($end_time-$start_time))" > ${TIME_LOG_FILE}
+echo "EXP04_BTREE: $(($end_time-$start_time))" >> ${TIME_LOG_FILE}
 sleep 10
 
 start_time=$(date +%s)
@@ -80,5 +81,5 @@ mkdir -p ${FOLDER}/EXP00_MICROBENCH/
 cp -R data_collections ${FOLDER}/EXP00_MICROBENCH/${FOLDER_EXTRA}
 rm -rf data_collections/*
 end_time=$(date +%s)
-echo "EXP00_MICROBENCH: $(($end_time-$start_time))" > ${TIME_LOG_FILE}
+echo "EXP00_MICROBENCH: $(($end_time-$start_time))" >> ${TIME_LOG_FILE}
 sleep 10
