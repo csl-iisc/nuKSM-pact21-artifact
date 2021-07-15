@@ -169,3 +169,15 @@ $ cd evaluation_script
 $ bash complete_evaluation_fairness.sh nuKSM
 ```
 
+Reboot the machine
+```
+$ sudo reboot
+```
+
+After rebooting, now we shall run the below commands to run the prioriy runs
+```
+$ cd evaluation_script
+$ bash complete_priority.sh
+```
+
+
