@@ -92,8 +92,32 @@ Install and Create Virtual Machine Configurations
 Install a virtual machine using command line (choose ssh-server when prompted for package installation):
 
 ```
-$ virt-install --name ubuntu_numa_1 --ram 4096 --disk path=/home/akash/nuKSM_ubuntu_numa1.qcow2,size=50 --vcpus 4 --os-type linux --os-variant generic --network bridge=virbr0 --graphics none --console pty,target_type=serial --location 'http://archive.ubuntu.com/ubuntu/dists/bionic/main/installer-amd64/' --extra-args 'console=ttyS0,115200n8 serial'
-$ virt-install --name ubuntu_numa_2 --ram 4096 --disk path=/home/akash/nuKSM_ubuntu_numa2.qcow2,size=50 --vcpus 4 --os-type linux --os-variant generic --network bridge=virbr0 --graphics none --console pty,target_type=serial --location 'http://archive.ubuntu.com/ubuntu/dists/bionic/main/installer-amd64/' --extra-args 'console=ttyS0,115200n8 serial'
+$ virt-install \
+--name ubuntu_nuksm_1 \
+--ram 60000 \
+--disk path=./ubuntu_nuksm_1.qcow2,size=50 \
+--vcpus 4 \
+--os-type linux \
+--os-variant generic \
+--network bridge=virbr0 \
+--graphics none \
+--console pty,target_type=serial \
+--location 'http://archive.ubuntu.com/ubuntu/dists/bionic/main/installer-amd64/' \
+--extra-args 'console=ttyS0,115200n8 serial'
+
+
+$ virt-install \
+--name ubuntu_nuksm_2 \
+--ram 60000 \
+--disk path=./ubuntu_nuksm_2.qcow2,size=50 \
+--vcpus 4 \
+--os-type linux \
+--os-variant generic \
+--network bridge=virbr0 \
+--graphics none \
+--console pty,target_type=serial \
+--location 'http://archive.ubuntu.com/ubuntu/dists/bionic/main/installer-amd64/' \
+--extra-args 'console=ttyS0,115200n8 serial'
 ```
 Once installed, use the following script to prepare three VM configuration files:
 ```
