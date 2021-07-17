@@ -1,8 +1,9 @@
 bin/*
-benchmarks/NPB3.4-OMP/bin/*
+benchmarks/NPB3.4-OMP/bin/cg*
 benchmarks/NPB3.4-OMP/CG/npbparams.h
 benchmarks/NPB3.4-OMP/sys/setparams
 benchmarks/btree/BTree
+benchmarks/XSBench/src/XSBench
 
 # Prerequisites
 *.d
