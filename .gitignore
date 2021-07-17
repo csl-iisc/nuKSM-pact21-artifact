@@ -1,4 +1,8 @@
 bin/*
+benchmarks/NPB3.4-OMP/bin/*
+benchmarks/NPB3.4-OMP/CG/npbparams.h
+benchmarks/NPB3.4-OMP/sys/setparams
+benchmarks/btree/BTree
 
 # Prerequisites
 *.d

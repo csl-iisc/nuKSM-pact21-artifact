@@ -14,14 +14,17 @@ WDEPS=benchmarks/README.md
 
 btree : $(WDEPS)
 	+$(MAKE) -C $(BENCHMARKS)/btree
+	mkdir -p bin/
 	cp $(BENCHMARKS)/btree/BTree bin/
 
 xsbench: $(WDEPS)
 	+$(MAKE) -C $(BENCHMARKS)/XSBench/src
+	mkdir -p bin/
 	cp $(BENCHMARKS)/XSBench/src/XSBench bin/
 
 cg: $(WDEPS)
 	+$(MAKE) -C $(BENCHMARKS)/NPB3.4-OMP/ cg CLASS=C
+	mkdir -p bin
 	cp $(BENCHMARKS)/NPB3.4-OMP/bin/cg.C.x bin/CG
 
 clean:
