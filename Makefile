@@ -23,6 +23,7 @@ xsbench: $(WDEPS)
 	cp $(BENCHMARKS)/XSBench/src/XSBench bin/
 
 cg: $(WDEPS)
+	mkdir -p $(BENCHMARKS)/NPB3.4-OMP/bin
 	+$(MAKE) -C $(BENCHMARKS)/NPB3.4-OMP/ cg CLASS=C
 	mkdir -p bin
 	cp $(BENCHMARKS)/NPB3.4-OMP/bin/cg.C.x bin/CG

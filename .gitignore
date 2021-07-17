@@ -1,3 +1,5 @@
+# benchmarks
+
 bin/*
 benchmarks/NPB3.4-OMP/bin/cg*
 benchmarks/NPB3.4-OMP/CG/npbparams.h
