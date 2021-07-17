@@ -7,12 +7,12 @@
 #
 #################################################################################
 
-all: btree xsbench cg
+all: btree xsbench cg randomreads
 
 BENCHMARKS=benchmarks
 WDEPS=benchmarks/README.md
 
-btree : $(WDEPS)
+btree: $(WDEPS)
 	+$(MAKE) -C $(BENCHMARKS)/btree
 	mkdir -p bin/
 	cp $(BENCHMARKS)/btree/BTree bin/
@@ -28,8 +28,15 @@ cg: $(WDEPS)
 	mkdir -p bin
 	cp $(BENCHMARKS)/NPB3.4-OMP/bin/cg.C.x bin/CG
 
+randomreads: $(WDEPS)
+	+$(MAKE) -C $(BENCHMARKS)/randomAccess
+	mkdir -p bin/
+	cp $(BENCHMARKS)/randomAccess/wl-randomreads-inputpages bin/
+	cp $(BENCHMARKS)/randomAccess/wl-randomreads-inputpages-2 bin/
+
 clean:
 	+$(MAKE) -C $(BENCHMARKS)/btree clean
 	+$(MAKE) -C $(BENCHMARKS)/XSBench/src clean
 	+$(MAKE) -C $(BENCHMARKS)/NPB3.4-OMP/ clean
+	+$(MAKE) -C $(BENCHMARKS)/randomAccess clean
 	rm -rf bin/*

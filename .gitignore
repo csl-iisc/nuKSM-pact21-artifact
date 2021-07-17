@@ -6,6 +6,8 @@ benchmarks/NPB3.4-OMP/CG/npbparams.h
 benchmarks/NPB3.4-OMP/sys/setparams
 benchmarks/btree/BTree
 benchmarks/XSBench/src/XSBench
+benchmarks/randomAccess/wl-randomreads-inputpages
+benchmarks/randomAccess/wl-randomreads-inputpages-2
 
 # Prerequisites
 *.d
