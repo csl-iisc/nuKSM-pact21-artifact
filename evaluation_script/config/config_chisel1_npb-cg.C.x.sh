@@ -1,21 +1,21 @@
 CPU1=0
 vm1_name="ubuntu_numa_1"
 vm1_ip=192.168.123.149
-vm1_user="akash"
-vm1_pass="iamakash"
-prepare_vm1_script="sudo mount benchmarks /opt/benchmarks/ -t 9p -o trans=virtio"
+vm1_user="nuksm"
+vm1_pass="nuksm"
+prepare_vm1_script="sleep 1"
 vm1_script_phase2="sleep 1"
 #vm1_script_phase3="cd /home/akash/benchmarks/real/XSBench/openmp-threading; time ./XSBench -g 100000 -p 6000000"
-vm1_script_phase3="sudo /opt/benchmarks/NPB_ANOTHER/NPB3.4.1/NPB3.4-OMP/bin/cg.C.x"
+vm1_script_phase3="sudo /home/nuksm/nuKSM-artifact/benchmarks/NPB3.4-OMP/bin/cg.C.x"
 
 vm2_name="ubuntu_numa_2"
 vm2_ip=192.168.123.228
-vm2_user="akash"
-vm2_pass="iamakash"
-prepare_vm2_script="sudo mount benchmarks /opt/benchmarks/ -t 9p -o trans=virtio"
+vm2_user="nuksm"
+vm2_pass="nuksm"
+prepare_vm2_script="sleep 1"
 vm2_script_phase2="sleep 1"
 #vm2_script_phase3="cd /home/akash/benchmarks/real/XSBench/openmp-threading; time ./XSBench -g 100000 -p 6000000"
-vm2_script_phase3="sudo /opt/benchmarks/NPB_ANOTHER/NPB3.4.1/NPB3.4-OMP/bin/cg.C.x"
+vm2_script_phase3="sudo /home/nuksm/nuKSM-artifact/benchmarks/NPB3.4-OMP/bin/cg.C.x"
 
 time_to_sleep_thres1=20
 time_to_sleep_thres2=40
