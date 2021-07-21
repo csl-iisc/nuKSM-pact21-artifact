@@ -12,12 +12,12 @@ ECHO="echo -e "
 #BENCHMARKS_OP_FILE_VM1=("vm1_time" , "vm1_time" , "vm1_run_op")
 #BENCHMARKS_OP_FILE_VM2=("vm2_time" , "vm2_time" , "vm2_run_op")
 
-BENCHMARKS=("EXP01_XSBENCH" , "EXP02_SYSBENCHMYSQL" , "EXP03_CG" , "EXP04_BTREE")
+BENCHMARKS=("EXP00_MICROBENCH" , "EXP01_XSBENCH" , "EXP02_SYSBENCHMYSQL" , "EXP03_CG" , "EXP04_BTREE")
 BENCHMARKS_OP_FILE_VM1="csv_remote_local_vm1.csv"
 BENCHMARKS_OP_FILE_VM2="csv_remote_local_vm2.csv"
 
-echo "KSM_OFF_Instance-0_Local , KSM_OFF_Instance-0_Remote , KSM_OFF_Instance-1_Local , KSM_OFF_Instance-1_Remote , KSM_ON_Instance-0_Local , KSM_ON_Instance-0_Remote , KSM_ON_Instance-1_Local , KSM_ON_Instance-1_Remote"
+echo "KSM_Instance-0_Local , KSM_Instance-0_Remote , KSM_Instance-1_Local , KSM_Instance-1_Remote , nuKSM_Instance-0_Local , nuKSM_Instance-0_Remote , nuKSM_Instance-1_Local , nuKSM_Instance-1_Remote"
 for BENCHMARK_NUMBER in ${!BENCHMARKS[@]};do
     BENCHMARK=${BENCHMARKS[${BENCHMARK_NUMBER}]}
-    python3 parse_csv_local_remote_file.py  ${BASE_DIR}${BENCHMARK}/${KSM_OFF_FOLDER}/${BENCHMARKS_OP_FILE_VM1} ${BASE_DIR}${BENCHMARK}/${KSM_OFF_FOLDER}/${BENCHMARKS_OP_FILE_VM2} ${BASE_DIR}${BENCHMARK}/${KSM_ON_FOLDER}/${BENCHMARKS_OP_FILE_VM1} ${BASE_DIR}${BENCHMARK}/${KSM_ON_FOLDER}/${BENCHMARKS_OP_FILE_VM2}
+    python3 parse_csv_local_remote_file.py  ${BASE_DIR}${BENCHMARK}/${KSM_ON_FOLDER}/${BENCHMARKS_OP_FILE_VM1} ${BASE_DIR}${BENCHMARK}/${KSM_ON_FOLDER}/${BENCHMARKS_OP_FILE_VM2} ${BASE_DIR}${BENCHMARK}/${nuKSM_FOLDER}/${BENCHMARKS_OP_FILE_VM1} ${BASE_DIR}${BENCHMARK}/${nuKSM_FOLDER}/${BENCHMARKS_OP_FILE_VM2}
 done

@@ -25,8 +25,10 @@ CSVREMOTELOCAL2="$RUN_HOME/data_collections/csv_remote_local_vm2.csv"
 
 #-----------------------------------------------------------------------#
 
-CPU1=43
-CPU2=57
+if [[ "" != ${PERF_RUN} ]]; then
+    CPU1=${CPU_LIST_1}
+    CPU2=${CPU_LIST_2}
+fi
 
 
 echo $SUDO_PASSWD | sudo -S bash configure_ksm_at_begining.sh
@@ -192,8 +194,11 @@ get_initial_memory_usage
 start_vms
 #set_vms_priority
 ###############################################################
-setup_counting_processes
-#setup_counting_processes_perf
+if [[ "" == ${PERF_RUN} ]]; then
+    setup_counting_processes
+else 
+    setup_counting_processes_perf
+fi
 sleep 60
 # 2. Run WL-P1 on both VMs
 prepare_vms
@@ -247,7 +252,11 @@ wait $pid_wl2
 cat /proc/meminfo  | grep MemTotal | awk {'print $2 " " $3'} >> $MEMINFO_DUMP_FILE
 echo "" >> $MEMINFO_DUMP_FILE
 cat /proc/meminfo  | grep MemAvailable | awk {'print $2 " " $3'} >> $MEMINFO_DUMP_FILE
-complete_counting_porcesses
-#complete_counting_porcesses_perf
+
+if [[ "" == ${PERF_RUN} ]]; then
+    complete_counting_porcesses
+else
+    complete_counting_porcesses_perf
+fi
 # Shutdown all vms 
 shutdown_vms

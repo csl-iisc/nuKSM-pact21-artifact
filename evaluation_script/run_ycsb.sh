@@ -31,8 +31,10 @@ CSVREMOTELOCAL2="$RUN_HOME/data_collections/csv_remote_local_vm2.csv"
 
 #-----------------------------------------------------------------------#
 
-CPU1=43
-CPU2=57
+if [[ "" == ${PERF_RUN} ]]; then
+    CPU1=${CPU_LIST_1}
+    CPU2=${CPU_LIST_2}
+fi
 
 echo $SUDO_PASSWD | sudo -S bash configure_ksm_at_begining.sh
 
@@ -193,8 +195,11 @@ echo "Sleeping $SLEEP_INTERVAL after phase 2"
 sleep $SLEEP_INTERVAL
 echo "Begining Phase 3"
 complete_counting_porcesses
-setup_counting_processes_read_process
-#setup_counting_read_processes_perf
+if [[ "" == ${PERF_RUN} ]]; then
+    setup_counting_processes_read_process
+else
+    setup_counting_read_processes_perf
+fi
 # Run workloads within the VMs
 echo run_workloads_inside_vm $vm1_ip $vm1_user $vm1_pass "$vm1_script_phase3" 
 run_workloads_inside_vm $vm1_ip $vm1_user $vm1_pass "$vm1_script_phase3" 
@@ -205,8 +210,12 @@ run_workloads_inside_vm $vm2_ip $vm2_user $vm2_pass "$vm2_script_phase3"
 cat /proc/meminfo  | grep MemTotal | awk {'print $2 " " $3'} >> $MEMINFO_DUMP_FILE
 echo "" >> $MEMINFO_DUMP_FILE
 cat /proc/meminfo  | grep MemAvailable | awk {'print $2 " " $3'} >> $MEMINFO_DUMP_FILE
-complete_counting_porcesses
-#complete_counting_porcesses_perf
+
+if [[ "" == ${PERF_RUN} ]]; then
+    complete_counting_porcesses
+else
+    complete_counting_porcesses_perf
+fi
 copy_files_from_vm
 
 # Run workloads within the VMs : For cleanup of thje VMS
