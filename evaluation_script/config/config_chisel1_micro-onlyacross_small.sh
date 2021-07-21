@@ -7,7 +7,7 @@ vm1_script="cd /home/akash/benchmarks/numa-benchmarks/micro-onlyacross;./run.sh"
 #prepare_vm1_script="cd /home/akash/benchmarks/numa-benchmarks/micro-onlyacross;./prepare_workload-1.sh 600000 10"
 prepare_vm1_script="cd /home/akash/benchmarks/numa-benchmarks/micro-onlyacross;./prepare_workload-1.sh 600000 30"
 vm1_script_phase2="cd /home/akash/benchmarks/numa-benchmarks/micro-onlyacross;python3 complete_script.py filldata"
-vm1_script_phase3="cd /home/akash/benchmarks/numa-benchmarks/micro-onlyacross;time python3 complete_script.py access"
+vm1_script_phase3="cd /home/akash/benchmarks/numa-benchmarks/micro-onlyacross;/usr/bin/time -f '%s' -p  python3 complete_script.py access"
 vm1_run_file="/home/akash/vm_run_file"
 
 vm2_name="ubuntu_numa_2"
@@ -18,7 +18,7 @@ vm2_script="cd /home/akash/benchmarks/numa-benchmarks/micro-onlyacross;./run.sh"
 #prepare_vm2_script="cd /home/akash/benchmarks/numa-benchmarks/micro-onlyacross;./prepare_workload-1.sh 600000 10"
 prepare_vm2_script="cd /home/akash/benchmarks/numa-benchmarks/micro-onlyacross;./prepare_workload-1.sh 600000 30"
 vm2_script_phase2="cd /home/akash/benchmarks/numa-benchmarks/micro-onlyacross;python3 complete_script.py filldata"
-vm2_script_phase3="cd /home/akash/benchmarks/numa-benchmarks/micro-onlyacross;time python3 complete_script.py access"
+vm2_script_phase3="cd /home/akash/benchmarks/numa-benchmarks/micro-onlyacross;/usr/bin/time -f '%s' -p  python3 complete_script.py access"
 vm2_run_file="/home/akash/vm_run_file"
 
 
