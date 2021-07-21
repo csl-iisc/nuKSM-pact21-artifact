@@ -11,10 +11,8 @@
   <ip address='192.168.123.1' netmask='255.255.255.0'>
     <dhcp>
       <range start='192.168.123.2' end='192.168.123.254'/>
-      <host mac='52:54:00:78:47:9d' name='ubuntu_numa_1' ip='192.168.123.149'/>
-      <host mac='52:54:00:91:ef:df' name='ubuntu_numa_2' ip='192.168.123.228'/>
-      <host mac='52:54:00:99:cb:ed' name='ubuntu_numa_3' ip='192.168.123.208'/>
-      <host mac='52:54:00:1e:3e:0d' name='ubuntu_numa_4' ip='192.168.123.231'/>
+      <host mac='52:54:00:78:47:9d' name='ubuntu_nuksm_1' ip='192.168.123.149'/>
+      <host mac='52:54:00:91:ef:df' name='ubuntu_nuksm_2' ip='192.168.123.228'/>
     </dhcp>
   </ip>
 </network>
