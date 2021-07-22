@@ -131,13 +131,14 @@ $ virt-install \
 
 $ cd -
 ```
-Once installed, use the following script to prepare three VM configuration files:
+Once installed, prepare the VM configuration files:
+You need to change the following parts in the XML.
 ```
 1. <interface></interface>
 2. <vcpu></vcpu>
 3. <memory></memory>
 4. <currentMemory></currentMemory>
-
+```
 Refer to `nuKSM-pact21-artifact/resources/vm_xmls/` for all VM configurations used in the paper.
 
 Setup the VMs
