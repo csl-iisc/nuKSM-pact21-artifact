@@ -195,6 +195,7 @@ echo "Sleeping $SLEEP_INTERVAL after phase 2"
 sleep $SLEEP_INTERVAL
 echo "Begining Phase 3"
 complete_counting_porcesses
+
 if [[ "" == ${PERF_RUN} ]]; then
     setup_counting_processes_read_process
 else
