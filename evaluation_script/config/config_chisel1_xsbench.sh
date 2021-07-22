@@ -1,5 +1,5 @@
 CPU1=0
-vm1_name="ubuntu_numa_1"
+vm1_name="ubuntu_nuksm_1"
 vm1_ip=192.168.123.149
 vm1_user="nuksm"
 vm1_pass="nuksm"
@@ -9,7 +9,7 @@ vm1_script_phase2="sleep 1"
 #vm1_script_phase3="cd /home/akash/benchmarks/real/XSBench/openmp-threading; time ./XSBench -g 20000 -p 18000000" #20GB Workload
 vm1_script_phase3="cd /home/nuksm/nuKSM-artifact/benchmarks/XSBench/src ; time ./XSBench -g 20000 -p 72000000"
 
-vm2_name="ubuntu_numa_2"
+vm2_name="ubuntu_nuksm_2"
 vm2_ip=192.168.123.228
 vm2_user="nuksm"
 vm2_pass="nuksm"

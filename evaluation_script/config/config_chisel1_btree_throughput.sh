@@ -1,5 +1,5 @@
 CPU1=0
-vm1_name="ubuntu_numa_1"
+vm1_name="ubuntu_nuksm_1"
 vm1_ip=192.168.123.149
 vm1_user="nuksm"
 vm1_pass="nuksm"
@@ -9,7 +9,7 @@ vm1_script_phase2="sleep 1"
 vm1_script_phase3="sudo /home/nuksm/nuKSM-artifact/benchmarks/btree_throughput/BTree"
 vm1_run_file="/tmp/btree_throughput.csv"
 
-vm2_name="ubuntu_numa_2"
+vm2_name="ubuntu_nuksm_2"
 vm2_ip=192.168.123.228
 vm2_user="nuksm"
 vm2_pass="nuksm"

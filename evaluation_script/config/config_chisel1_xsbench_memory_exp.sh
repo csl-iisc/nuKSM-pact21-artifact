@@ -1,5 +1,5 @@
 CPU1=0
-vm1_name="ubuntu_numa_1"
+vm1_name="ubuntu_nuksm_1"
 vm1_ip=192.168.123.149
 vm1_user="akash"
 vm1_pass="iamakash"
@@ -30,7 +30,7 @@ vm1_script_phase3="cd /home/akash/benchmarks/real/XSBench/openmp-threading; time
 #vm1_script_phase3="cd /home/akash/benchmarks/real/XSBench/openmp-threading; time ./XSBench -g 80000 -p 72000000" #40GB > 60mins
 #vm1_script_phase3="cd /home/akash/benchmarks/real/XSBench/openmp-threading; time ./XSBench -g 20000 -p 72000000" #10GB > 60mins
 
-vm2_name="ubuntu_numa_2"
+vm2_name="ubuntu_nuksm_2"
 vm2_ip=192.168.123.228
 vm2_user="akash"
 vm2_pass="iamakash"

@@ -10,5 +10,5 @@ echo $3
 echo $4
 echo $5 
 
-sshpass -p "iamakash" scp $5 $2@$1:$3
+sshpass -p "$4" scp -o stricthostkeychecking=no  $5 $2@$1:$3
 

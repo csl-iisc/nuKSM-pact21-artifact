@@ -1,5 +1,5 @@
 CPU1=0
-vm1_name="ubuntu_numa_1"
+vm1_name="ubuntu_nuksm_1"
 vm1_ip=192.168.123.149
 vm1_user="akash"
 vm1_pass="iamakash"
@@ -9,7 +9,7 @@ vm1_script_phase3="sysbench --skip_trx=on --threads=20  --db-driver=mysql  --mys
 vm1_script_cleanup="sysbench --db-driver=mysql  --mysql-user=akash --mysql-password=iamakash --mysql-db=pandabench --table_size=40000000 --mysql_storage_engine=memory --rand-type=uniform --rand-seed=1 /home/akash/benchmarks/real/sysbench/src/lua/oltp_read_only.lua cleanup"
 vm1_run_file="/home/akash/OpRun.out"
 
-vm2_name="ubuntu_numa_2"
+vm2_name="ubuntu_nuksm_2"
 vm2_ip=192.168.123.228
 vm2_user="akash"
 vm2_pass="iamakash"

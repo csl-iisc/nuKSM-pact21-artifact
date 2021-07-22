@@ -1,21 +1,21 @@
 CPU1=0
-vm1_name="ubuntu_numa_1"
+vm1_name="ubuntu_nuksm_1"
 vm1_ip=192.168.123.149
 vm1_user="nuksm"
 vm1_pass="nuksm"
 prepare_vm1_script="echo 0 | sudo tee /proc/sys/kernel/randomize_va_space "
 vm1_script_phase2="sleep 1"
 #vm1_script_phase3="cd /home/akash/benchmarks/real/XSBench/openmp-threading; time ./XSBench -g 100000 -p 6000000"
-vm1_script_phase3="sudo /home/nuksm/nuKSM-artifact/benchmarks/btree/BTree"
+vm1_script_phase3="/home/nuksm/nuKSM-artifact/benchmarks/btree/BTree"
 
-vm2_name="ubuntu_numa_2"
+vm2_name="ubuntu_nuksm_2"
 vm2_ip=192.168.123.228
 vm2_user="nuksm"
 vm2_pass="nuksm"
 prepare_vm2_script="echo 0 | sudo tee /proc/sys/kernel/randomize_va_space"
 vm2_script_phase2="sleep 1"
 #vm2_script_phase3="cd /home/akash/benchmarks/real/XSBench/openmp-threading; time ./XSBench -g 100000 -p 6000000"
-vm2_script_phase3="sudo /home/nuksm/nuKSM-artifact/benchmarks/btree/BTree"
+vm2_script_phase3="/home/nuksm/nuKSM-artifact/benchmarks/btree/BTree"
 
 time_to_sleep_thres1=20
 time_to_sleep_thres2=40

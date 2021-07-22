@@ -4,5 +4,5 @@
 
 #set timeout 60
 
-sshpass -p "$4"  scp $2@$1:$3 $5
+sshpass -p "$4"  scp -o stricthostkeychecking=no  $2@$1:$3 $5
 

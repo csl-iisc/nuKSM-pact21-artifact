@@ -1,5 +1,5 @@
 CPU1=0
-vm1_name="ubuntu_numa_1"
+vm1_name="ubuntu_nuksm_1"
 vm1_ip=192.168.123.149
 vm1_user="akash"
 vm1_pass="iamakash"
@@ -8,7 +8,7 @@ prepare_vm1_script="cd /home/akash/benchmarks/numa-benchmarks/micro-onlyacross;.
 vm1_script_phase2="cd /home/akash/benchmarks/numa-benchmarks/micro-onlyacross;python3 complete_script.py filldata"
 vm1_script_phase3="cd /home/akash/benchmarks/numa-benchmarks/micro-onlyacross;time python3 complete_script.py access"
 
-vm2_name="ubuntu_numa_2"
+vm2_name="ubuntu_nuksm_2"
 vm2_ip=192.168.123.228
 vm2_user="akash"
 vm2_pass="iamakash"

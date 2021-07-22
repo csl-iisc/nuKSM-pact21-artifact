@@ -1,5 +1,5 @@
 CPU1=0
-vm1_name="ubuntu_numa_1"
+vm1_name="ubuntu_nuksm_1"
 vm1_ip=192.168.123.149
 vm1_user="akash"
 vm1_pass="iamakash"
@@ -9,7 +9,7 @@ vm1_script_phase2="sleep 1"
 vm1_script_phase3="sudo /opt/benchmarks/btree_throughput_parallel/BTree"
 vm1_run_file="/home/akash/btree_throughput.csv"
 
-vm2_name="ubuntu_numa_2"
+vm2_name="ubuntu_nuksm_2"
 vm2_ip=192.168.123.228
 vm2_user="akash"
 vm2_pass="iamakash"

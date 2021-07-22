@@ -89,9 +89,19 @@ $ sudo make install
 Install and Create Virtual Machine Configurations
 -------------------------------------------------
 
+Create a network for our Virtual machines: 
+```
+$ cd resources/network_xml/
+$ virsh net-define network-01.xml  
+$ virsh net-start network-01
+$ cd -
+```
+
 Install a virtual machine using command line (choose ssh-server when prompted for package installation):
 
 ```
+$ cd VM_images/;
+ 
 $ virt-install \
 --name ubuntu_nuksm_1 \
 --ram 60000 \
@@ -118,16 +128,53 @@ $ virt-install \
 --console pty,target_type=serial \
 --location 'http://archive.ubuntu.com/ubuntu/dists/bionic/main/installer-amd64/' \
 --extra-args 'console=ttyS0,115200n8 serial'
+
+$ cd -
 ```
 Once installed, use the following script to prepare three VM configuration files:
 ```
-1. <vcpu> </vcpu> -- to update the number of CPUs to be allocated to the VM (all or single socket)
-2. <memory> </memory> -- to update the amount of memory to be allocated to the VM (all or single socket)
-3. <cputune> <cputune> -- to bind vCPUs to pCPUs
-4. <numatune> </numatune> -- to setup the number of guest NUMA nodes (required only for **numa-visible.xml**)
-5. <cpu><numa> </numa></cpu> -- to bind vCPUs to guest NUMA nodes (required only for **numa-visible.xml**)
-```
+1. <interface></interface>
+2. <vcpu></vcpu>
+3. <memory></memory>
+4. <currentMemory></currentMemory>
+
 Refer to `nuKSM-pact21-artifact/resources/vm_xmls/` for all VM configurations used in the paper.
+
+Setup the VMs
+-----------------
+Login into the VMs to clone the nuKSM-artifact
+```
+$ ssh nuksm@192.168.123.228 
+```
+
+After logging into the VMs, run the following commands
+```
+$ sudo apt install net-tools mysql-server libmysqlclient-dev sysbench git make gcc g++ gfortran
+$ sudo systemctl disable mysql
+
+```
+
+Add these lines to /etc/mysql/mysql.conf.d/mysqld.cnf
+```
+tmp_table_size=20G
+max_heap_table_size=20G
+```
+
+Run
+```
+$ sudo service mysql restart
+```
+
+Switch user to root to setup mysql user. Run the following commands
+-------------------------------------------------------------------
+```
+# mysql -u root -p
+
+mysql> CREATE USER "nuksm"@"localhost" IDENTIFIED BY "nuksm";
+mysql> CREATE DATABASE nuksmbench;
+mysql> GRANT ALL PRIVILEGES ON `nuksmbench` . * TO 'nuksm'@'localhost';
+mysql> FLUSH PRIVILEGES;
+```
 
 Generate Data For Figures
 -------------------------
