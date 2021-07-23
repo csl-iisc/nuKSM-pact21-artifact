@@ -238,4 +238,22 @@ $ cd /path/to/nuKSM-artifact/evaluation_script
 $ bash complete_priority.sh
 ```
 
+Generating the Data for Figures
+-------------------------------
+
+To generate all figures, execute.
+
+```
+$ bash scripts/generate_all.sh
+```
+
+To generate data for a single figure, do:
+
+ * Figure-3a - `bash scripts/figure_three_a.sh`
+ * Figure-3b - `bash scripts/figure_three_b.sh`
+ * Figure-4 - `bash scripts/figure_four.sh`
+ * Figure-6a - `bash scripts/figure_six_a.sh`
+ * Figure-6b - `bash scripts/figure_six_b.sh`
+ * Figure-7 - `bash scripts/figure_seven.sh`
+ * Figure-8 - ``
 
