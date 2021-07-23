@@ -194,11 +194,20 @@ Reboot the machine
 $ sudo reboot
 ```
 
-After rebooting, now we shall run the benchmarks with the following scripts
+After rebooting, get into root user using below command.
 ```
-$ cd evaluation_script
-$ bash complete_evaluation_fairness.sh KSM_OFF 
-$ bash complete_evaluation_fairness.sh KSM_ON
+# sudo -s
+```
+
+After rebooting, now we shall run the benchmarks with the following scripts
+
+```
+# cd /path/to/nuKSM-artifact/evaluation_script
+# bash complete_evaluation_fairness.sh KSM_OFF 
+# bash complete_evaluation_fairness.sh KSM_ON
+# bash complete_throughput_inversion.sh KSM_ON
+# bash complete_evaluation_fairness_perf.sh KSM_OFF
+# bash complete_evaluation_fairness_perf.sh KSM_ON
 ```
 
 Now edit the /etc/default/grub file to change the 
@@ -213,8 +222,9 @@ GRUB_DEFAULT="Advanced options for Ubuntu>Ubuntu, with Linux 5.4.0+"
 
 Now we have to run the following script to run the benchmarks with nuKSM
 ```
-$ cd evaluation_script
-$ bash complete_evaluation_fairness.sh nuKSM
+# cd /path/to/nuKSM-artifact/evaluation_script
+# bash complete_evaluation_fairness.sh nuKSM
+# bash complete_evaluation_fairness_perf.sh KSM_ON
 ```
 
 Reboot the machine
@@ -224,7 +234,7 @@ $ sudo reboot
 
 After rebooting, now we shall run the below commands to run the prioriy runs
 ```
-$ cd evaluation_script
+$ cd /path/to/nuKSM-artifact/evaluation_script
 $ bash complete_priority.sh
 ```
 
