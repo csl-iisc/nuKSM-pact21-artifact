@@ -23,7 +23,7 @@ cd config
 unlink config.sh
 ln -s config_chisel1_btree_throughput.sh config.sh
 cd ..
-./run_real.sh
+./run_real_throughput.sh
 mkdir -p ${FOLDER}/EXP04_BTREE/
 cp -R data_collections ${FOLDER}/EXP04_BTREE/${FOLDER_EXTRA}
 rm -rf data_collections/*
