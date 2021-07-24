@@ -73,36 +73,44 @@ The source code for the Linux kernel and evaluated worloads are available on
 GitHub and included as public submodules. To obtain the source code, initialize the git submodules.
 
 ```
-$ cd nuKSM-pact21-artifact
+$ cd /path/to/nuKSM-pact21-artifact/
 $ git submodule init
 $ git submodule update
+$ make
 ```
 
-To compile nuKSM linux kernel:
+On your test machine, compile and install
+the vmlinux binary from ./sources/nuKSM-linux/ and boot
+from it.
 ```
-$ cd nuKSMLinuxKernel
-$ make -j 70
+$ cd sources/nuKSM-linux/
+$ git checkout v5.4.0
+$ make -j $(nproc)
 $ sudo make modules_install
-$ sudo make install 
+$ sudo make install
+$ git checkout nuKSM_SingleTree
+$ make -j $(nproc)
+$ sudo make modules_install
+$ sudo make install
+$ git checkout nuKSM_MultiTree
+$ make -j $(nproc)
+$ sudo make modules_install
+$ sudo make install
 ```
+
+
 
 Install and Create Virtual Machine Configurations
 -------------------------------------------------
-
-Create a network for our Virtual machines: 
-```
-$ cd resources/network_xml/
-$ virsh net-define network-01.xml  
-$ virsh net-start network-01
-$ cd -
-```
-
-Install a virtual machine using command line (choose ssh-server when prompted for package installation):
+Install a virtual machine using libvirt on your test machine. An example using 
+command line installation is provided below (choose sshserver when prompted 
+for package installation). Create an user with username nuksm and password nuksm 
+when asked for during the installation process
 
 ```
 $ cd VM_images/;
  
-$ virt-install \
+$ virt-install 
 --name ubuntu_nuksm_1 \
 --ram 60000 \
 --disk path=./ubuntu_nuksm_1.qcow2,size=50 \
@@ -112,7 +120,8 @@ $ virt-install \
 --network bridge=virbr0 \
 --graphics none \
 --console pty,target_type=serial \
---location 'http://archive.ubuntu.com/ubuntu/dists/bionic/main/installer-amd64/' \
+--location 'http://archive.ubuntu.com/ubuntu/dists/\
+bionic/main/installer-amd64/' \
 --extra-args 'console=ttyS0,115200n8 serial'
 
 
@@ -126,33 +135,48 @@ $ virt-install \
 --network bridge=virbr0 \
 --graphics none \
 --console pty,target_type=serial \
---location 'http://archive.ubuntu.com/ubuntu/dists/bionic/main/installer-amd64/' \
+--location 'http://archive.ubuntu.com/ubuntu/dists/\
+bionic/main/installer-amd64/' \
 --extra-args 'console=ttyS0,115200n8 serial'
 
 $ cd -
 ```
-Once installed, prepare the VM configuration files:
-You need to change the following parts in the XML.
+Create a network for our Virtual machines: 
 ```
-1. <interface></interface>
-2. <vcpu></vcpu>
-3. <memory></memory>
-4. <currentMemory></currentMemory>
+$ cd resources/network_xml/
+$ virsh net-define network-01.xml  
+$ virsh net-start network-01
+$ cd -
+```
+
+Once installed, run the below command to generate the required VM configurations. 
+The appropriate configuration will be loaded by run scripts themselves.
+```
+$ cd scripts
+$ python3 gen_vmconfigs.py
+$ cd -
 ```
 Refer to `nuKSM-pact21-artifact/resources/vm_xmls/` for all VM configurations used in the paper.
 
+Once the network is setup and the configurations are loaded, restart the vms.
+```
+$ virsh shutdown ubuntu_nuksm_1
+$ virsh shutdown ubuntu_nuksm_2
+$ virsh start ubuntu_nuksm_1
+$ virsh start ubuntu_nuksm_2
+```
+
 Setup the VMs
 -----------------
-Login into the VMs to clone the nuKSM-artifact
-```
-$ ssh nuksm@192.168.123.228 
-```
+Login to the machines to setup the benchmarks inside the VMs. IPs
+of ubuntu nuksm 1 will be 192.168.123.149 and of ubuntu nuksm 2
+will be 192.168.123.228. Perform the following steps on both the
+VMs to setup the benchamrks and environment.
 
-After logging into the VMs, run the following commands
 ```
+$ ssh nuksm@[IP OF THE VM]
 $ sudo apt install net-tools mysql-server libmysqlclient-dev sysbench git make gcc g++ gfortran
 $ sudo systemctl disable mysql
-
 ```
 
 Add these lines to /etc/mysql/mysql.conf.d/mysqld.cnf
@@ -173,88 +197,74 @@ Switch user to root to setup mysql user. Run the following commands
 
 mysql> CREATE USER "nuksm"@"localhost" IDENTIFIED BY "nuksm";
 mysql> CREATE DATABASE nuksmbench;
-mysql> GRANT ALL PRIVILEGES ON `nuksmbench` . * TO 'nuksm'@'localhost';
+mysql> GRANT ALL PRIVILEGES ON nuksmbench . * TO 'nuksm'@'localhost';
 mysql> FLUSH PRIVILEGES;
 ```
 
-Generate Data For Figures
--------------------------
-Edit the /etc/default/grub file to change the GRUB_DEFAULT
+Experiment workflow
+-------------------
+We provide various scripts to run various experiments as performed
+in the paper. All the automation scripts to launch the benchmarks are
+in the bash ./evaluation_script/ directory.
 ```
-GRUB_DEFAULT="Advanced options for Ubuntu>Ubuntu, with Linux 5.4.0
+# cd evaluation_scripts/
 ```
-
-Run update-grub
+1) **Launching Fairness experiments:** 
+Boot the Linux kernel v5.4.0, and run the following scripts.
 ```
-$ sudo update-grub
-```
-
-Reboot the machine
-```
-$ sudo reboot
-```
-
-After rebooting, get into root user using below command.
-```
-# sudo -s
-```
-
-After rebooting, now we shall run the benchmarks with the following scripts
-
-```
-# cd /path/to/nuKSM-artifact/evaluation_script
-# bash complete_evaluation_fairness.sh KSM_OFF 
-# bash complete_evaluation_fairness.sh KSM_ON
-# bash complete_throughput_inversion.sh KSM_ON
+# bash complete_evaluation_fairness.sh KSM_OFF
 # bash complete_evaluation_fairness_perf.sh KSM_OFF
+# bash complete_evaluation_fairness.sh KSM_ON
 # bash complete_evaluation_fairness_perf.sh KSM_ON
 ```
-
-Now edit the /etc/default/grub file to change the 
-Comment all lines with 
+Now boot with the Linux Kernel 5.4.0nuKSMSingleTree+ kernel,
+and run the following scripts.
 ```
-GRUB_DEFAULT=
-```
-Add 
-```
-GRUB_DEFAULT="Advanced options for Ubuntu>Ubuntu, with Linux 5.4.0+"
-```
-
-Now we have to run the following script to run the benchmarks with nuKSM
-```
-# cd /path/to/nuKSM-artifact/evaluation_script
+# cd evaluation_scripts/
 # bash complete_evaluation_fairness.sh nuKSM
-# bash complete_evaluation_fairness_perf.sh KSM_ON
+# bash complete_evaluation_fairness_perf.sh nuKSM
 ```
 
-Reboot the machine
+2) **Launching priority inversion experiments:**
+Boot from Linux kernel v5.4.0, and run the following scripts.
 ```
-$ sudo reboot
+# bash complete_throughput_inversion.sh KSM_ON
 ```
-
-After rebooting, now we shall run the below commands to run the prioriy runs
+Now boot from Linux kernel 5.4.0nuKSMSingleTree++, and run
+the following scripts.
 ```
-$ cd /path/to/nuKSM-artifact/evaluation_script
-$ bash complete_priority.sh
-```
-
-For running the Scalability experiment: 
-Since we capture cpu% using ps command. ps command provides average cpu utilization.
-We will add our script to crontab @reboot , so that the script is run when the system is rebooted.
-```
-# crontab -e 
-```
-Add `@reboot /path/to/nuKSM-artifact/evaluation_script/crontab_script.sh` to crontab. 
-
-Reboot the machine.
-```
-# sudo reboot 
+# bash complete_priority.sh
 ```
 
-After machine restarts, wait for the workload to finish.
+3) **Launching scalability experiments:**
+We have to launch some experiment automatically on machine startup. 
+This is required because for this experiment, we capture CPU% as a metric. 
+We use ps. to capture CPU%, which provides an average CPU utilization
+percentage.
 
-Generating the Data for Figures
--------------------------------
+In order to edit the crontab script, run
+```
+# crontab -e
+```
+Now, add the below line to crontab so that the scripts starts on reboot.
+```
+@reboot /path/to/nuKSM-pact21-artifact/evaluation_script/crontab_script.sh
+```
+
+Now reboot the machine so that the scripts stars and wait for it to
+get completed. It takes around 1600 seconds to get completed. Once
+it is completed, reboot with Linux Kernel 5.4.0nuKSMMultiTree+.
+Again wait for the script to get completed. Now remove the added line
+from crontab, so that the next reboot would not launch the experiment.
+
+Gathering the results
+---------------------
+Now all our experiment’s results are ready, and we would run scripts to gather 
+the results required for various Figures. We provide individual scripts for each 
+figure in the paper, and a common script to launch all of them in one go 
+in ./scripts/ directory. Once you have run the benchmarks on the target machine, 
+you can go into the scripts directory and execute the scripts to generate the data 
+for the figures as described below.
 
 To generate all figures, execute.
 
@@ -270,5 +280,6 @@ To generate data for a single figure, do:
  * Figure-6a - `bash scripts/figure_six_a.sh`
  * Figure-6b - `bash scripts/figure_six_b.sh`
  * Figure-7 - `bash scripts/figure_seven.sh`
- * Figure-8 - ``
-
+ * Figure-8a - `bash scripts/figure_eight_a.sh`
+ * Figure-8b - `bash scripts/figure_eight_b.sh`
+ * Figure-8c - `bash scripts/figure_eight_c.sh`
