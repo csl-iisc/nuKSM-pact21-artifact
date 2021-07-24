@@ -85,6 +85,9 @@ def rewrite_config(config):
     for child in main:
         if child.tag == 'vcpu':
             child.text = str(get_vcpu_count(config))
+            if child.get('cpuset') is not None:
+                cpuset = '%d-%d' %(0, get_vcpu_count(config) - 1)
+                child.set('cpuset', cpuset)
             add_vcpu_numa_tune(config, main, child)
         if child.tag == 'memory' or child.tag == 'currentMemory':
             child.text = str(get_memory_size(config))
