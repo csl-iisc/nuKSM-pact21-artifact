@@ -283,3 +283,13 @@ To generate data for a single figure, do:
  * Figure-8a - `bash scripts/figure_eight_a.sh`
  * Figure-8b - `bash scripts/figure_eight_b.sh`
  * Figure-8c - `bash scripts/figure_eight_c.sh`
+
+If you run bash ./generate_all.sh, you will find the
+generated CSVs inside `results` directory.
+
+Evaluation and expected results
+-------------------------------
+Once you’ve completed all or partial experiments, you can compare
+the outcomes with the expected results shown in the figures in
+the paper.
+
