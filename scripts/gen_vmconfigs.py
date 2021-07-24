@@ -7,16 +7,6 @@ import multiprocessing
 import subprocess
 import psutil
 
-KERNEL_TRIDENT='/boot/vmlinuz-4.17.3-Trident+'
-INITRD_TRIDENT='/boot/initrd.img-4.17.3-Trident+'
-CMDLINE_TRIDENT='console=ttyS0 root=/dev/sda1 '
-
-CMDLINE_2MBHUGE_POSTFIX='default_hugepagesz=2M'
-CMDLINE_1GBHUGE_POSTFIX='default_hugepagesz=1G'
-
-KERNEL_HAWKEYE='/boot/vmlinuz-4.17.3-HawkEye+'
-INITRD_HAWKEYE='/boot/initrd.img-4.3.0-HawkEye+'
-
 
 root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 

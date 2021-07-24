@@ -238,6 +238,21 @@ $ cd /path/to/nuKSM-artifact/evaluation_script
 $ bash complete_priority.sh
 ```
 
+For running the Scalability experiment: 
+Since we capture cpu% using ps command. ps command provides average cpu utilization.
+We will add our script to crontab @reboot , so that the script is run when the system is rebooted.
+```
+# crontab -e 
+```
+Add `@reboot /path/to/nuKSM-artifact/evaluation_script/crontab_script.sh` to crontab. 
+
+Reboot the machine.
+```
+# sudo reboot 
+```
+
+After machine restarts, wait for the workload to finish.
+
 Generating the Data for Figures
 -------------------------------
 
