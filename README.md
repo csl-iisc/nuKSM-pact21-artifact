@@ -266,26 +266,29 @@ in ./scripts/ directory. Once you have run the benchmarks on the target machine,
 you can go into the scripts directory and execute the scripts to generate the data 
 for the figures as described below.
 
-To generate all figures, execute.
-
+To generate all figures, move in into the ./scripts/ directory.
 ```
-$ bash scripts/generate_all.sh
+$ cd scripts/
+```
+and execute
+```
+$ bash generate_all.sh
 ```
 
 To generate data for a single figure, do:
 
- * Figure-3a - `bash scripts/figure_three_a.sh`
- * Figure-3b - `bash scripts/figure_three_b.sh`
- * Figure-4 - `bash scripts/figure_four.sh`
- * Figure-6a - `bash scripts/figure_six_a.sh`
- * Figure-6b - `bash scripts/figure_six_b.sh`
- * Figure-7 - `bash scripts/figure_seven.sh`
- * Figure-8a - `bash scripts/figure_eight_a.sh`
- * Figure-8b - `bash scripts/figure_eight_b.sh`
- * Figure-8c - `bash scripts/figure_eight_c.sh`
+ * Figure-3a - `bash figure_three_a.sh`
+ * Figure-3b - `bash figure_three_b.sh`
+ * Figure-4 - `bash figure_four.sh`
+ * Figure-6a - `bash figure_six_a.sh`
+ * Figure-6b - `bash figure_six_b.sh`
+ * Figure-7 - `bash figure_seven.sh`
+ * Figure-8a - `bash figure_eight_a.sh`
+ * Figure-8b - `bash figure_eight_b.sh`
+ * Figure-8c - `bash figure_eight_c.sh`
 
 If you run bash ./generate_all.sh, you will find the
-generated CSVs inside `results` directory.
+generated CSVs inside `/path/to/nuKSM-pact-artifact/results` directory.
 
 Evaluation and expected results
 -------------------------------
