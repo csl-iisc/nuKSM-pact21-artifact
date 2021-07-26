@@ -1,5 +1,4 @@
-BASE_DIR="../../run_script/collections_experimnent_data/FINAL_DATA_4cores_again/"
-BASE_DIR="../evaluation_script/collections_experimnent_data/DEMO_RESULTS/"
+BASE_DIR="../evaluation_script/collections_experimnent_data/RESULTS/"
 KSM_OFF_FOLDER="5.4.0_KSMOFF"
 KSM_ON_FOLDER="5.4.0_KSMON"
 nuKSM_FOLDER="5.4.0+_KSMON"

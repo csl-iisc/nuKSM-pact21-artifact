@@ -7,7 +7,7 @@
 #
 #################################################################################
 
-all: btree xsbench cg randomreads
+all: btree xsbench cg randomreads btree_throughput helperPrograms
 
 BENCHMARKS=benchmarks
 WDEPS=benchmarks/README.md
@@ -16,6 +16,11 @@ btree: $(WDEPS)
 	+$(MAKE) -C $(BENCHMARKS)/btree
 	mkdir -p bin/
 	cp $(BENCHMARKS)/btree/BTree bin/
+
+btree_throughput: $(WDEPS)
+	+$(MAKE) -C $(BENCHMARKS)/btree_throughput
+	mkdir -p bin/
+	cp $(BENCHMARKS)/btree_throughput/BTree bin/BTree_throughput
 
 xsbench: $(WDEPS)
 	+$(MAKE) -C $(BENCHMARKS)/XSBench/src
@@ -33,6 +38,11 @@ randomreads: $(WDEPS)
 	mkdir -p bin/
 	cp $(BENCHMARKS)/randomAccess/wl-randomreads-inputpages bin/
 	cp $(BENCHMARKS)/randomAccess/wl-randomreads-inputpages-2 bin/
+
+helperPrograms: $(WDEPS)
+	+$(MAKE) -C $(BENCHMARKS)/helperPrograms/
+	mkdir -p bin/
+	cp $(BENCHMARKS)/helperPrograms/fill_another bin/
 
 clean:
 	+$(MAKE) -C $(BENCHMARKS)/btree clean

@@ -195,8 +195,8 @@ get_initial_memory_usage
 start_vms
 set_vms_priority
 ###############################################################
-#setup_counting_processes
-setup_counting_processes_perf
+setup_counting_processes
+#setup_counting_processes_perf
 sleep 60
 # 2. Run WL-P1 on both VMs
 prepare_vms
@@ -250,8 +250,8 @@ wait $pid_wl2
 cat /proc/meminfo  | grep MemTotal | awk {'print $2 " " $3'} >> $MEMINFO_DUMP_FILE
 echo "" >> $MEMINFO_DUMP_FILE
 cat /proc/meminfo  | grep MemAvailable | awk {'print $2 " " $3'} >> $MEMINFO_DUMP_FILE
-#complete_counting_porcesses
-complete_counting_porcesses_perf
+complete_counting_porcesses
+#complete_counting_porcesses_perf
 copy_files_from_vm
 # Shutdown all vms 
 shutdown_vms

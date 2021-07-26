@@ -31,7 +31,7 @@ CPU1=43
 CPU2=57
 
 
-echo $SUDO_PASSWD | sudo -S bash configure_ksm_at_begining.sh
+echo $SUDO_PASSWD | sudo -S bash configure_ksm_at_begining_ksmon_scalability.sh
 
 start_vms() {
     start_vm $vm1_name
@@ -185,9 +185,10 @@ copy_files_from_vm() {
 }
 
 # Preparation before starting 
-/home/akash/data/project/ksmautonuma-prj/helperPrograms/allocate_at_once | tee $RUN_HOME/data_collections/helper_out_error.log &
-echo "Sleeping 120s"
-sleep 120
+#/home/akash/data/project/ksmautonuma-prj/helperPrograms/allocate_at_once | tee $RUN_HOME/data_collections/helper_out_error.log &
+#/home/akash/data/project/ksmautonuma-prj/helperPrograms/allocate | tee $RUN_HOME/data_collections/helper_out_error.log &
+#echo "Sleeping 120s"
+#sleep 120
 
 echo "INITIAL" > $MEMINFO_DUMP_FILE
 cat /proc/meminfo  | grep MemTotal | awk {'print $2 " " $3'} >> $MEMINFO_DUMP_FILE
@@ -249,6 +250,7 @@ pid_wl2=$!
 
 #sleep 60
 #/home/akash/data/project/ksmautonuma-prj/helperPrograms/a.out | tee $RUN_HOME/data_collections/helper_out_error.log &
+${RUN_HOME}/../benchmarks/helperPrograms/fill_another | tee $RUN_HOME/data_collections/helper_out_error.log &
 
 
 #pid_script_file=$!

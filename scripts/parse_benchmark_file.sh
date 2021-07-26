@@ -4,7 +4,7 @@
 PARSE_EXP00_MICROBENCH()
 {
     FILE=$1
-    VM_RUNTIME=`grep "real" ${BASE_DIR}EXP00_MICROBENCH/${KSM_ON_FOLDER}/vm1_time | awk '{print $2}'`
+    VM_RUNTIME=`grep "real" ${FILE} | awk '{print $2}'`
     echo ${VM_RUNTIME}
 }
 
