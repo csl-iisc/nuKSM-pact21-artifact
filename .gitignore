@@ -62,4 +62,5 @@ Module.symvers
 Mkfile.old
 dkms.conf
 evaluation_script/collections_experimnent_data/*
+evaluation_script/data_collections/*
 VM_images/*
