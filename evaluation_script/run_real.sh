@@ -10,6 +10,7 @@ USED_MEMORY_INITIAL_FILE="$RUN_HOME/data_collections/used_total"
 FREE_MEMORY_INITIAL_FILE="$RUN_HOME/data_collections/free_total"
 NICE_VALUE_1=${REQ_NICE_VALUE_1}
 NICE_VALUE_2=${REQ_NICE_VALUE_2}
+PRIORITY_RUN=${PRIORITY_RUN_ENV}
 
 SUDO_PASSWD="iamakash"
 
@@ -192,6 +193,10 @@ echo "----------" >> $MEMINFO_DUMP_FILE
 # (VM1 on CPU belonging to Node 0 and VM2 on CPU belonging to Node 1)
 get_initial_memory_usage
 start_vms
+if [[ ${PRIORITY_RUN} != "" ]] ; then
+    set_vms_priority
+fi
+
 #set_vms_priority
 ###############################################################
 if [[ "" == ${PERF_RUN} ]]; then

@@ -1,6 +1,7 @@
 . ./parse_benchmark_file.sh
 
-BASE_DIR="../evaluation_script/collections_experimnent_data/RESULTS_PERF/"
+FAIRNESS_BASE_DIR="../evaluation_script/collections_experimnent_data/RESULTS_FAIRNESS/"
+BASE_DIR="../evaluation_script/collections_experimnent_data/PRIORITY_AWARE_EXP/"
 KSM_OFF_FOLDER="5.4.0_KSM_OFF"
 KSM_ON_FOLDER="5.4.0_KSM_ON"
 nuKSM_FOLDER="5.4.0+_KSM_ON"
@@ -12,12 +13,37 @@ ECHO="echo -e "
 #BENCHMARKS_OP_FILE_VM1=("vm1_time" , "vm1_time" , "vm1_run_op")
 #BENCHMARKS_OP_FILE_VM2=("vm2_time" , "vm2_time" , "vm2_run_op")
 
-BENCHMARKS=("EXP01_XSBENCH" , "EXP02_SYSBENCHMYSQL" , "EXP03_CG" , "EXP04_BTREE")
-BENCHMARKS_OP_FILE_VM1="csv_remote_local_vm1.csv"
-BENCHMARKS_OP_FILE_VM2="csv_remote_local_vm2.csv"
+BENCHMARKS=("EXP04_BTREE"  "EXP01_XSBENCH"  "EXP02_SYSBENCHMYSQL")
+#BENCHMARKS=("EXP02_SYSBENCHMYSQL" "EXP04_BTREE")
+CONFIGURATIONS=("C-10:1"  "C-5:1"  "C-1:1"  "C-1:5"  "C-1:10")
 
-echo "KSM_OFF_Instance-0_Local , KSM_OFF_Instance-0_Remote , KSM_OFF_Instance-1_Local , KSM_OFF_Instance-1_Remote , KSM_ON_Instance-0_Local , KSM_ON_Instance-0_Remote , KSM_ON_Instance-1_Local , KSM_ON_Instance-1_Remote"
+echo "Benchmark , Configuration , Instance-0_NormalizedRuntime , Instance-2_NormalizedRuntime"
 for BENCHMARK_NUMBER in ${!BENCHMARKS[@]};do
     BENCHMARK=${BENCHMARKS[${BENCHMARK_NUMBER}]}
-    python3 parse_csv_local_remote_file.py  ${BASE_DIR}${BENCHMARK}/${KSM_OFF_FOLDER}/${BENCHMARKS_OP_FILE_VM1} ${BASE_DIR}${BENCHMARK}/${KSM_OFF_FOLDER}/${BENCHMARKS_OP_FILE_VM2} ${BASE_DIR}${BENCHMARK}/${KSM_ON_FOLDER}/${BENCHMARKS_OP_FILE_VM1} ${BASE_DIR}${BENCHMARK}/${KSM_ON_FOLDER}/${BENCHMARKS_OP_FILE_VM2}
+    if [[ "${BENCHMARK}" == "EXP04_BTREE" ]];then
+        KSM_OFF_VM0_NUMBER=`PARSE_${BENCHMARK} ${FAIRNESS_BASE_DIR}${BENCHMARK}/${KSM_OFF_FOLDER}/vm1_time`
+        KSM_OFF_VM1_NUMBER=`PARSE_${BENCHMARK} ${FAIRNESS_BASE_DIR}${BENCHMARK}/${KSM_OFF_FOLDER}/vm2_time`
+    elif [[ "${BENCHMARK}" == "EXP01_XSBENCH" ]];then
+        KSM_OFF_VM0_NUMBER=`PARSE_${BENCHMARK} ${FAIRNESS_BASE_DIR}${BENCHMARK}/${KSM_OFF_FOLDER}/vm1_time`
+        KSM_OFF_VM1_NUMBER=`PARSE_${BENCHMARK} ${FAIRNESS_BASE_DIR}${BENCHMARK}/${KSM_OFF_FOLDER}/vm2_time`
+    elif [[ "${BENCHMARK}" == "EXP02_SYSBENCHMYSQL" ]];then
+        KSM_OFF_VM0_NUMBER=`PARSE_${BENCHMARK} ${FAIRNESS_BASE_DIR}${BENCHMARK}/${KSM_OFF_FOLDER}/vm1_run_op`
+        KSM_OFF_VM1_NUMBER=`PARSE_${BENCHMARK} ${FAIRNESS_BASE_DIR}${BENCHMARK}/${KSM_OFF_FOLDER}/vm2_run_op`
+    fi 
+    for CONFIGURATION_NUMBER in ${!CONFIGURATIONS[@]};do
+        CONFIGURATION=${CONFIGURATIONS[${CONFIGURATION_NUMBER}]}
+        if [[ "${BENCHMARK}" == "EXP04_BTREE" ]];then
+            nuKSM_VM0_NUMBER=`PARSE_${BENCHMARK} ${BASE_DIR}${BENCHMARK}/${CONFIGURATION_NUMBER}/vm1_time`
+            nuKSM_VM1_NUMBER=`PARSE_${BENCHMARK} ${BASE_DIR}${BENCHMARK}/${CONFIGURATION_NUMBER}/vm2_time`
+        elif [[ "${BENCHMARK}" == "EXP01_XSBENCH" ]];then
+            nuKSM_VM0_NUMBER=`PARSE_${BENCHMARK} ${BASE_DIR}${BENCHMARK}/${CONFIGURATION_NUMBER}/vm1_time`
+            nuKSM_VM1_NUMBER=`PARSE_${BENCHMARK} ${BASE_DIR}${BENCHMARK}/${CONFIGURATION_NUMBER}/vm2_time`
+        elif [[ "${BENCHMARK}" == "EXP02_SYSBENCHMYSQL" ]];then
+            nuKSM_VM0_NUMBER=`PARSE_${BENCHMARK} ${BASE_DIR}${BENCHMARK}/${CONFIGURATION_NUMBER}/vm1_run_op`
+            nuKSM_VM1_NUMBER=`PARSE_${BENCHMARK} ${BASE_DIR}${BENCHMARK}/${CONFIGURATION_NUMBER}/vm2_run_op`
+        fi
+        VM0_RUNTIME_OFF_NORM=`echo "${FRACTION_SALE};${nuKSM_VM0_NUMBER}/${KSM_OFF_VM0_NUMBER}" | bc -l`
+        VM1_RUNTIME_OFF_NORM=`echo "${FRACTION_SALE};${nuKSM_VM1_NUMBER}/${KSM_OFF_VM0_NUMBER}" | bc -l`
+        echo ${BENCHMARK} , ${CONFIGURATION} , ${VM0_RUNTIME_OFF_NORM} , ${VM1_RUNTIME_OFF_NORM}
+    done 
 done

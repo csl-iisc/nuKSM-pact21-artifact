@@ -16,48 +16,8 @@ fi
 
 FOLDER="./collections_experimnent_data/RESULTS_FAIRNESS/"
 TIME_LOG_FILE="timelog.log"
+> ${TIME_LOG_FILE}
 #echo ${FOLDER}${FOLDER_EXTRA}
-
-#start_time=$(date +%s)
-#mkdir -p ${FOLDER}
-#cd config 
-#unlink config.sh
-#ln -s config_chisel1_xsbench.sh config.sh
-#cd ..
-#./run_real.sh
-#mkdir -p ${FOLDER}/EXP01_XSBENCH/
-#cp -R data_collections ${FOLDER}/EXP01_XSBENCH/${FOLDER_EXTRA}
-#rm -rf data_collections/*
-#end_time=$(date +%s)
-#echo "EXP01_XSBENCH : $(($end_time-$start_time))" >> ${TIME_LOG_FILE}
-#sleep 10
-
-#start_time=$(date +%s)
-#cd config
-#unlink config.sh 
-#ln -s config_chisel1_npb-cg.C.x.sh config.sh
-#cd ..
-#./run_real.sh
-#mkdir -p ${FOLDER}/EXP03_CG/
-#cp -R data_collections ${FOLDER}/EXP03_CG/${FOLDER_EXTRA}
-#rm -rf data_collections/*
-#end_time=$(date +%s)
-#echo "EXP03_CG: $(($end_time-$start_time))" >> ${TIME_LOG_FILE}
-#sleep 10
-
-
-#start_time=$(date +%s)
-#cd config
-#unlink config.sh
-#ln -s config_chisel1_btree.sh config.sh
-#cd ..
-#./run_real.sh
-#mkdir -p ${FOLDER}/EXP04_BTREE/
-#cp -R data_collections ${FOLDER}/EXP04_BTREE/${FOLDER_EXTRA}
-#rm -rf data_collections/*
-#end_time=$(date +%s)
-#echo "EXP04_BTREE: $(($end_time-$start_time))" >> ${TIME_LOG_FILE}
-#sleep 10
 
 #start_time=$(date +%s)
 #cd config
@@ -71,6 +31,61 @@ TIME_LOG_FILE="timelog.log"
 #end_time=$(date +%s)
 #echo "EXP00_MICROBENCH: $(($end_time-$start_time))" >> ${TIME_LOG_FILE}
 #sleep 10
+
+#exit 0
+
+start_time=$(date +%s)
+mkdir -p ${FOLDER}
+cd config 
+unlink config.sh
+ln -s config_chisel1_xsbench.sh config.sh
+cd ..
+./run_real.sh
+mkdir -p ${FOLDER}/EXP01_XSBENCH/
+cp -R data_collections ${FOLDER}/EXP01_XSBENCH/${FOLDER_EXTRA}
+rm -rf data_collections/*
+end_time=$(date +%s)
+echo "EXP01_XSBENCH : $(($end_time-$start_time))" >> ${TIME_LOG_FILE}
+sleep 10
+
+start_time=$(date +%s)
+cd config
+unlink config.sh 
+ln -s config_chisel1_npb-cg.C.x.sh config.sh
+cd ..
+./run_real.sh
+mkdir -p ${FOLDER}/EXP03_CG/
+cp -R data_collections ${FOLDER}/EXP03_CG/${FOLDER_EXTRA}
+rm -rf data_collections/*
+end_time=$(date +%s)
+echo "EXP03_CG: $(($end_time-$start_time))" >> ${TIME_LOG_FILE}
+sleep 10
+
+start_time=$(date +%s)
+cd config
+unlink config.sh
+ln -s config_chisel1_btree.sh config.sh
+cd ..
+./run_real.sh
+mkdir -p ${FOLDER}/EXP04_BTREE/
+cp -R data_collections ${FOLDER}/EXP04_BTREE/${FOLDER_EXTRA}
+rm -rf data_collections/*
+end_time=$(date +%s)
+echo "EXP04_BTREE: $(($end_time-$start_time))" >> ${TIME_LOG_FILE}
+sleep 10
+
+start_time=$(date +%s)
+cd config
+unlink config.sh
+ln -s config_chisel1_micro-onlyacross_small.sh config.sh
+cd ..
+./run.sh
+mkdir -p ${FOLDER}/EXP00_MICROBENCH/
+cp -R data_collections ${FOLDER}/EXP00_MICROBENCH/${FOLDER_EXTRA}
+rm -rf data_collections/*
+end_time=$(date +%s)
+echo "EXP00_MICROBENCH: $(($end_time-$start_time))" >> ${TIME_LOG_FILE}
+sleep 10
 
 start_time=$(date +%s)
 cd config

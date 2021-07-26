@@ -15,7 +15,7 @@ RUN_2_OP="$RUN_HOME/data_collections/vm2_run_op"
 #NICE_VALUE=${REQ_NICE_VALUE}
 NICE_VALUE_1=${REQ_NICE_VALUE_1}
 NICE_VALUE_2=${REQ_NICE_VALUE_2}
-
+PRIORITY_RUN=${PRIORITY_RUN_ENV}
 
 SUDO_PASSWD="iamakash"
 
@@ -178,7 +178,9 @@ echo "----------" >> $MEMINFO_DUMP_FILE
 # (VM1 on CPU belonging to Node 0 and VM2 on CPU belonging to Node 1)
 get_initial_memory_usage
 start_vms
-#set_vms_priority
+if [[ ${PRIORITY_RUN} != "" ]] ; then
+    set_vms_priority
+fi
 ###############################################################
 setup_counting_processes
 sleep 40
