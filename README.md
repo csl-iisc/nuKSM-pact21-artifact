@@ -221,7 +221,7 @@ Boot from Linux kernel v5.4.0, and run the following scripts.
 ```
 # bash run_priority_inversion.sh KSM_ON
 ```
-Now boot from Linux kernel 5.4.0nuKSMSingleTree++, and run
+Now boot from Linux kernel 5.4.0nuKSMSingleTree+, and run
 the following scripts.
 ```
 # bash run_priority_nuksm.sh
