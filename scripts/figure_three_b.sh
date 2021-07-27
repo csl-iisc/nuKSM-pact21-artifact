@@ -19,5 +19,6 @@ BENCHMARKS_OP_FILE_VM2="csv_remote_local_vm2.csv"
 echo "KSM_OFF_Instance-0_Local , KSM_OFF_Instance-0_Remote , KSM_OFF_Instance-1_Local , KSM_OFF_Instance-1_Remote , KSM_ON_Instance-0_Local , KSM_ON_Instance-0_Remote , KSM_ON_Instance-1_Local , KSM_ON_Instance-1_Remote"
 for BENCHMARK_NUMBER in ${!BENCHMARKS[@]};do
     BENCHMARK=${BENCHMARKS[${BENCHMARK_NUMBER}]}
+    echo -n "${BENCHMARK} , "
     python3 parse_csv_local_remote_file.py  ${BASE_DIR}${BENCHMARK}/${KSM_OFF_FOLDER}/${BENCHMARKS_OP_FILE_VM1} ${BASE_DIR}${BENCHMARK}/${KSM_OFF_FOLDER}/${BENCHMARKS_OP_FILE_VM2} ${BASE_DIR}${BENCHMARK}/${KSM_ON_FOLDER}/${BENCHMARKS_OP_FILE_VM1} ${BASE_DIR}${BENCHMARK}/${KSM_ON_FOLDER}/${BENCHMARKS_OP_FILE_VM2}
 done

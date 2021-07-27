@@ -16,8 +16,9 @@ BENCHMARKS=("EXP00_MICROBENCH" "EXP01_XSBENCH" "EXP02_SYSBENCHMYSQL" "EXP03_CG" 
 BENCHMARKS_OP_FILE_VM1="csv_remote_local_vm1.csv"
 BENCHMARKS_OP_FILE_VM2="csv_remote_local_vm2.csv"
 
-echo "KSM_Instance-0_Local , KSM_Instance-0_Remote , KSM_Instance-1_Local , KSM_Instance-1_Remote , nuKSM_Instance-0_Local , nuKSM_Instance-0_Remote , nuKSM_Instance-1_Local , nuKSM_Instance-1_Remote"
+echo "BENCHMARK , KSM_Instance-0_Local , KSM_Instance-0_Remote , KSM_Instance-1_Local , KSM_Instance-1_Remote , nuKSM_Instance-0_Local , nuKSM_Instance-0_Remote , nuKSM_Instance-1_Local , nuKSM_Instance-1_Remote"
 for BENCHMARK_NUMBER in ${!BENCHMARKS[@]};do
     BENCHMARK=${BENCHMARKS[${BENCHMARK_NUMBER}]}
+    echo -n "${BENCHMARK} , "
     python3 parse_csv_local_remote_file.py  ${BASE_DIR}${BENCHMARK}/${KSM_ON_FOLDER}/${BENCHMARKS_OP_FILE_VM1} ${BASE_DIR}${BENCHMARK}/${KSM_ON_FOLDER}/${BENCHMARKS_OP_FILE_VM2} ${BASE_DIR}${BENCHMARK}/${nuKSM_FOLDER}/${BENCHMARKS_OP_FILE_VM1} ${BASE_DIR}${BENCHMARK}/${nuKSM_FOLDER}/${BENCHMARKS_OP_FILE_VM2}
 done

@@ -26,6 +26,6 @@ def get_local_remote(filelines):
 (instance2_local_off , instance2_remote_off) = get_local_remote(local_remote_off_2_lines)
 (instance1_local_on , instance1_remote_on) = get_local_remote(local_remote_on_1_lines)
 (instance2_local_on , instance2_remote_on) = get_local_remote(local_remote_on_2_lines)
-print(instance1_local_off , instance1_remote_off , instance2_local_off , instance2_remote_off , instance1_local_on , instance1_remote_on , instance2_local_on , instance2_remote_on)
+print(instance1_local_off , "," ,  instance1_remote_off ,"," ,  instance2_local_off , "," , instance2_remote_off , "," , instance1_local_on , "," , instance1_remote_on , "," , instance2_local_on , "," , instance2_remote_on)
         
 
