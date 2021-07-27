@@ -6,7 +6,7 @@ vm1_pass="nuksm"
 prepare_vm1_script="echo 0 | sudo tee /proc/sys/kernel/randomize_va_space "
 vm1_script_phase2="sleep 1"
 #vm1_script_phase3="cd /home/akash/benchmarks/real/XSBench/openmp-threading; time ./XSBench -g 100000 -p 6000000"
-vm1_script_phase3="sudo /home/nuksm/nuKSM-artifact/benchmarks/btree_throughput/BTree"
+vm1_script_phase3="numactl -C 0 /home/nuksm/nuKSM-artifact/benchmarks/btree_throughput/BTree"
 vm1_run_file="/tmp/btree_throughput.csv"
 
 vm2_name="ubuntu_nuksm_2"
@@ -16,7 +16,7 @@ vm2_pass="nuksm"
 prepare_vm2_script="echo 0 | sudo tee /proc/sys/kernel/randomize_va_space"
 vm2_script_phase2="sleep 1"
 #vm2_script_phase3="cd /home/akash/benchmarks/real/XSBench/openmp-threading; time ./XSBench -g 100000 -p 6000000"
-vm2_script_phase3="sudo /home/nuksm/nuKSM-artifact/benchmarks/btree_throughput/BTree"
+vm2_script_phase3="numactl -C 0 /home/nuksm/nuKSM-artifact/benchmarks/btree_throughput/BTree"
 vm2_run_file="/tmp/btree_throughput.csv"
 
 time_to_sleep_thres1=20

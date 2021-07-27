@@ -17,4 +17,7 @@ LOAD_NEW_CONFIGS()
 
 mkdir -p ${CURRENT_DIR}/../resources/vm_xmls/dump/
 COPY_CURRENT_CONFIGS
+sudo service libvirtd stop
 LOAD_NEW_CONFIGS
+sudo service libvirtd start
+echo "VM configuration updated..."

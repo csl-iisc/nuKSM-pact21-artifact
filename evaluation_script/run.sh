@@ -25,7 +25,7 @@ CSVREMOTELOCAL2="$RUN_HOME/data_collections/csv_remote_local_vm2.csv"
 #-----------------------------------------------------------------------#
 NICE_VALUE="3"
 
-if [[ "" == ${PERF_RUN} ]]; then
+if [[ "" != ${PERF_RUN} ]]; then
     CPU1=${CPU_LIST_1}
     CPU2=${CPU_LIST_2}
 fi

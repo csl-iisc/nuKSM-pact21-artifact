@@ -19,7 +19,7 @@ TIME_LOG_FILE="timelog.log"
 #echo ${FOLDER}${FOLDER_EXTRA}
 
 export PERF_RUN="yes"
-export CPU_LIST_1="1-4"
+export CPU_LIST_1="0-3"
 export CPU_LIST_2="18-21"
 
 start_time=$(date +%s)
@@ -36,7 +36,6 @@ end_time=$(date +%s)
 echo "EXP01_XSBENCH : $(($end_time-$start_time))" >> ${TIME_LOG_FILE}
 sleep 10
 
-exit  0
 start_time=$(date +%s)
 cd config
 unlink config.sh 
@@ -68,7 +67,7 @@ cd config
 unlink config.sh
 ln -s config_chisel1_btree.sh config.sh
 cd ..
-./run_real_N.sh
+./run_real.sh
 mkdir -p ${FOLDER}/EXP04_BTREE/
 cp -R data_collections ${FOLDER}/EXP04_BTREE/${FOLDER_EXTRA}
 rm -rf data_collections/*
