@@ -76,7 +76,7 @@ $ make
 On your test machine, compile and install
 the vmlinux binary from ./nuKSM-linux/
 ```
-$ git checkout v5.4.0
+$ git checkout v5.4
 $ cp -v /boot/config-$(uname -r) .config
 $ make menuconfig
 $ make -j $(nproc)

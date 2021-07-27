@@ -26,7 +26,7 @@ CSVREMOTELOCAL2="$RUN_HOME/data_collections/csv_remote_local_vm2.csv"
 
 #-----------------------------------------------------------------------#
 
-if [[ "" != ${PERF_RUN} ]]; then
+if [[ "" != "${PERF_RUN}" ]]; then
     CPU1=${CPU_LIST_1}
     CPU2=${CPU_LIST_2}
 fi
@@ -199,7 +199,7 @@ fi
 
 #set_vms_priority
 ###############################################################
-if [[ "" == ${PERF_RUN} ]]; then
+if [[ "" == "${PERF_RUN}" ]]; then
     setup_counting_processes
 else 
     setup_counting_processes_perf
@@ -258,7 +258,7 @@ cat /proc/meminfo  | grep MemTotal | awk {'print $2 " " $3'} >> $MEMINFO_DUMP_FI
 echo "" >> $MEMINFO_DUMP_FILE
 cat /proc/meminfo  | grep MemAvailable | awk {'print $2 " " $3'} >> $MEMINFO_DUMP_FILE
 
-if [[ "" == ${PERF_RUN} ]]; then
+if [[ "" == "${PERF_RUN}" ]]; then
     complete_counting_porcesses
 else
     complete_counting_porcesses_perf

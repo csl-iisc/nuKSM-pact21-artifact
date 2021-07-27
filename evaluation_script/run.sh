@@ -25,7 +25,7 @@ CSVREMOTELOCAL2="$RUN_HOME/data_collections/csv_remote_local_vm2.csv"
 #-----------------------------------------------------------------------#
 NICE_VALUE="3"
 
-if [[ "" != ${PERF_RUN} ]]; then
+if [[ "" != "${PERF_RUN}" ]]; then
     CPU1=${CPU_LIST_1}
     CPU2=${CPU_LIST_2}
 fi
@@ -194,7 +194,7 @@ sleep 1000
 echo "KSM params set. Sleeping 10 before execution of phase 3"
 sleep 10
 complete_counting_porcesses
-if [[ "" == ${PERF_RUN} ]]; then
+if [[ "" == "${PERF_RUN}" ]]; then
     setup_counting_processes_read_process
 else
     setup_counting_read_processes_perf
@@ -221,7 +221,7 @@ run_workloads_inside_vm_op_redirection $vm2_ip $vm2_user $vm2_pass "$vm2_script_
 #wait $pid_wl2
 #kill -9 $pid_thres1
 #kill -9 $pid_thres2
-if [[ "" == ${PERF_RUN} ]]; then
+if [[ "" == "${PERF_RUN}" ]]; then
     complete_counting_porcesses
 else
     complete_counting_porcesses_perf
