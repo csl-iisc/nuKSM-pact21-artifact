@@ -1,0 +1,3 @@
+[submodule "nuKSM-linux"]
+	path = nuKSM-linux
+	url = https://gitlab.com/akashpanda/linux_mod.git
