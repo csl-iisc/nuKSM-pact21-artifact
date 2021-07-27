@@ -50,15 +50,20 @@ def add_vcpu_numa_tune(config, main, child, node, head):
     out = str(out, 'utf-8')
     cpus = out.split()
     nr_pcpus = len(cpus)
+    ret = ''
     for i in range(nr_cpus):
         newtag = ET.SubElement(new, 'vcpupin')
         newtag.set('cpuset', str(cpus[i]))
         newtag.set('vcpu', str(i))
         # --- first or last cpus of the node
-        if not head:
+        if head:
+            ret += cpus[nr_pcpus - i - 1]
+        else:
             newtag.set('cpuset', str(cpus[nr_pcpus - i - 1]))
+            ret += str(cpus[nr_pcpus - i - 1]) + ','
 
     remove_tag(main, 'numatune')
+    return ret.strip(',')
 
 def rewrite_interface(config, element):
     element.set('type', 'network')
@@ -85,11 +90,11 @@ def rewrite_config(config, node, head):
     main = tree.getroot()
     for child in main:
         if child.tag == 'vcpu':
+            cpuset = add_vcpu_numa_tune(config, main, child, node, head)
             child.text = str(get_vcpu_count(config))
             if child.get('cpuset') is not None:
-                cpuset = '%d-%d' %(0, get_vcpu_count(config) - 1)
-                child.set('cpuset', cpuset)
-            add_vcpu_numa_tune(config, main, child, node, head)
+            #    cpuset = '%d-%d' %(0, get_vcpu_count(config) - 1)
+                 child.set('cpuset', cpuset)
         if child.tag == 'memory' or child.tag == 'currentMemory':
             child.text = str(get_memory_size(config))
         if child.tag == 'devices':
