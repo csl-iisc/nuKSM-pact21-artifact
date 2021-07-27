@@ -57,7 +57,7 @@ def add_vcpu_numa_tune(config, main, child, node, head):
         newtag.set('vcpu', str(i))
         # --- first or last cpus of the node
         if head:
-            ret += cpus[nr_pcpus - i - 1] + ','
+            ret += str(cpus[i]) + ','
         else:
             newtag.set('cpuset', str(cpus[nr_pcpus - i - 1]))
             ret += str(cpus[nr_pcpus - i - 1]) + ','
