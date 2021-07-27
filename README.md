@@ -16,12 +16,6 @@ Authors
  * Arkaprava Basu (Indian Institute of Science)
 
 
-License
--------
-
-See LICENSE file.
-
-
 Directory Structure
 -------------------
 
@@ -80,18 +74,18 @@ $ make
 ```
 
 On your test machine, compile and install
-the vmlinux binary from ./sources/nuKSM-linux/ and boot
-from it.
+the vmlinux binary from ./nuKSM-linux/
 ```
-$ cd sources/nuKSM-linux/
 $ git checkout v5.4.0
+$ cp -v /boot/config-$(uname -r) .config
+$ make menuconfig
 $ make -j $(nproc)
 $ sudo make modules_install
 $ sudo make install
 $ git checkout nuKSM_SingleTree
 $ make -j $(nproc)
 $ sudo make modules_install
-$ sudo make install
+$ sudo make install 
 $ git checkout nuKSM_MultiTree
 $ make -j $(nproc)
 $ sudo make modules_install
@@ -104,7 +98,7 @@ Install and Create Virtual Machine Configurations
 -------------------------------------------------
 Install a virtual machine using libvirt on your test machine. An example using 
 command line installation is provided below (choose sshserver when prompted 
-for package installation). Create an user with username nuksm and password nuksm 
+for package installation). Create an user with username `nuksm` and password `nuksm` 
 when asked for during the installation process
 
 ```
@@ -124,20 +118,9 @@ $ virt-install
 bionic/main/installer-amd64/' \
 --extra-args 'console=ttyS0,115200n8 serial'
 
-
-$ virt-install \
+$ virt-clone --original ubuntu_nuksm_1 \ 
 --name ubuntu_nuksm_2 \
---ram 60000 \
---disk path=./ubuntu_nuksm_2.qcow2,size=50 \
---vcpus 4 \
---os-type linux \
---os-variant generic \
---network bridge=virbr0 \
---graphics none \
---console pty,target_type=serial \
---location 'http://archive.ubuntu.com/ubuntu/dists/\
-bionic/main/installer-amd64/' \
---extra-args 'console=ttyS0,115200n8 serial'
+--auto-clone
 
 $ cd -
 ```
@@ -153,7 +136,8 @@ Once installed, run the below command to generate the required VM configurations
 The appropriate configuration will be loaded by run scripts themselves.
 ```
 $ cd scripts
-$ python3 gen_vmconfigs.py
+$ sudo python3 gen_vmconfigs.py 0 1
+$ sudo ./load_vmconfigs.sh
 $ cd -
 ```
 Refer to `nuKSM-pact21-artifact/resources/vm_xmls/` for all VM configurations used in the paper.
@@ -201,6 +185,13 @@ mysql> GRANT ALL PRIVILEGES ON nuksmbench . * TO 'nuksm'@'localhost';
 mysql> FLUSH PRIVILEGES;
 ```
 
+Clone the repository https://github.com/csl-iisc/nuKSM-pact21-artifact in /home/nuksm/nuKSM-artifact and compile the benchmarks.
+```
+$ git clone https://github.com/csl-iisc/nuKSM-pact21-artifact nuKSM-artifact
+$ cd nuKSM-artifact
+$ make 
+```
+
 Experiment workflow
 -------------------
 We provide various scripts to run various experiments as performed
@@ -212,50 +203,54 @@ in the bash ./evaluation_script/ directory.
 1) **Launching Fairness experiments:** 
 Boot the Linux kernel v5.4.0, and run the following scripts.
 ```
-# bash complete_evaluation_fairness.sh KSM_OFF
-# bash complete_evaluation_fairness_perf.sh KSM_OFF
-# bash complete_evaluation_fairness.sh KSM_ON
-# bash complete_evaluation_fairness_perf.sh KSM_ON
+# bash run_evaluation_fairness.sh KSM_OFF
+# bash run_evaluation_fairness_perf.sh KSM_OFF
+# bash run_evaluation_fairness.sh KSM_ON
+# bash run_evaluation_fairness_perf.sh KSM_ON
 ```
 Now boot with the Linux Kernel 5.4.0nuKSMSingleTree+ kernel,
 and run the following scripts.
 ```
 # cd evaluation_scripts/
-# bash complete_evaluation_fairness.sh nuKSM
-# bash complete_evaluation_fairness_perf.sh nuKSM
+# bash run_evaluation_fairness.sh nuKSM
+# bash run_evaluation_fairness_perf.sh nuKSM
 ```
 
 2) **Launching priority inversion experiments:**
 Boot from Linux kernel v5.4.0, and run the following scripts.
 ```
-# bash complete_throughput_inversion.sh KSM_ON
+# bash run_priority_inversion.sh KSM_ON
 ```
 Now boot from Linux kernel 5.4.0nuKSMSingleTree++, and run
 the following scripts.
 ```
-# bash complete_priority.sh
+# bash run_priority_nuksm.sh
 ```
 
 3) **Launching scalability experiments:**
-We have to launch some experiment automatically on machine startup. 
-This is required because for this experiment, we capture CPU% as a metric. 
-We use ps. to capture CPU%, which provides an average CPU utilization
-percentage.
-
-In order to edit the crontab script, run
+We need to launch these experiments automatically on machine startup 
+to accurately capture CPU utilization of KSM and nuKSM (we use `ps` 
+to record the average CPU utilization). First we re-configure to bind 
+both VMs to node-0 and edit the crontab script:
 ```
+# cd scripts/
+# python3 ./gen_vmconfigs.py 0 0
+# ./load_vmconfigs.sh
 # crontab -e
 ```
-Now, add the below line to crontab so that the scripts starts on reboot.
+Add the following line to crontab:
 ```
 @reboot /path/to/nuKSM-pact21-artifact/evaluation_script/crontab_script.sh
 ```
 
-Now reboot the machine so that the scripts stars and wait for it to
-get completed. It takes around 1600 seconds to get completed. Once
-it is completed, reboot with Linux Kernel 5.4.0nuKSMMultiTree+.
-Again wait for the script to get completed. Now remove the added line
-from crontab, so that the next reboot would not launch the experiment.
+We need to limit the memory on the machine to 175 GiB in order to run this 
+experiment. To do that, we have to change the `/etc/default/grub` file 
+and set `GRUB_CMDLINE_LINUX` to `"mem=175G"`.
+
+Reboot the machine and wait for the experiment to finish. It takes around 
+1600 seconds to get completed. Next, reboot with Linux Kernel 
+5.4.0nuKSMMultiTree+ and wait for experiments to finish. Now remove the 
+added line from crontab, so that the next reboot will not launch the experiment.
 
 Gathering the results
 ---------------------
