@@ -37,25 +37,26 @@ def get_memory_size(config):
     mem = int(psutil.virtual_memory().total)/1024 # --- converted to KB
     return int(min(int((mem * 0.90) / nr_sockets), 62914560)) # --- min(available, 60GB)
 
-
 # Bind vCPUs 1:1: to pCPUs
-def add_vcpu_numa_tune(config, main, child):
+def add_vcpu_numa_tune(config, main, child, node, head):
     nr_cpus = int(child.text)
     pos = list(main).index(child)
     remove_tag(main, 'cputune')
     new = ET.Element('cputune')
     main.insert(pos + 1, new)
     cpus = [i for i in range(nr_cpus)]
-    if config == 'ubuntu_nuksm_1':
-        out = subprocess.check_output('numactl -H | grep "node 0 cpus" | cut -d " " -f4-', shell  = True)
-    else:
-        out = subprocess.check_output('numactl -H | grep "node 1 cpus" | cut -d " " -f4-', shell  = True)
+    cmd = 'numactl -H | grep "node %d cpus" | cut -d " " -f4-' %node
+    out = subprocess.check_output(cmd, shell  = True)
     out = str(out, 'utf-8')
     cpus = out.split()
+    nr_pcpus = len(cpus)
     for i in range(nr_cpus):
         newtag = ET.SubElement(new, 'vcpupin')
         newtag.set('cpuset', str(cpus[i]))
         newtag.set('vcpu', str(i))
+        # --- first or last cpus of the node
+        if not head:
+            newtag.set('cpuset', str(cpus[nr_pcpus - i - 1]))
 
     remove_tag(main, 'numatune')
 
@@ -77,7 +78,7 @@ def rewrite_interface(config, element):
 # 3. memory: amount of memory for the VM -- in KiB
 # 4. vcputune: add after the vcpu tag, bind with a 1:1 mapping
 # 5. numa: add inside cpu tag to mirror host NUMA topology inside guest
-def rewrite_config(config):
+def rewrite_config(config, node, head):
     vmconfigs = os.path.join(root, 'resources/vm_xmls/live')
     src = os.path.join(vmconfigs, config + '.xml')
     tree = ET.parse(src)
@@ -88,7 +89,7 @@ def rewrite_config(config):
             if child.get('cpuset') is not None:
                 cpuset = '%d-%d' %(0, get_vcpu_count(config) - 1)
                 child.set('cpuset', cpuset)
-            add_vcpu_numa_tune(config, main, child)
+            add_vcpu_numa_tune(config, main, child, node, head)
         if child.tag == 'memory' or child.tag == 'currentMemory':
             child.text = str(get_memory_size(config))
         if child.tag == 'devices':
@@ -109,19 +110,27 @@ def dump_vm_config(vm):
     os.system(cmd)
 
 if __name__ == '__main__':
-    parent_vm = 'ubuntu_nuksm_1'
-    if len(sys.argv) == 2:
-        parent_vm = sys.argv[1]
+    vm0_node = 0
+    vm1_node = 1
+    head = True
+    if len(sys.argv) == 3:
+        vm0_node = int(sys.argv[1])
+        vm1_node = int(sys.argv[2])
+        if vm0_node == vm1_node:
+            head = False
+    else:
+        print('Supply 2 nodes where vCPUs are to be pinned...')
+        sys.exit(0)
 
+    parent_vm = 'ubuntu_nuksm_1'
     configs = ['ubuntu_nuksm_1', 'ubuntu_nuksm_2']
 
     #dump_vm_config_template(parent_vm, configs)
     dump_vm_config('ubuntu_nuksm_1')
     dump_vm_config('ubuntu_nuksm_2')
 
-    for config in configs:
-        print('re-writing: ' + config+'.xml')
-        rewrite_config(config)
+    rewrite_config('ubuntu_nuksm_1', vm0_node, True)
+    rewrite_config('ubuntu_nuksm_2', vm1_node, head)
 
     # --- prettify XML files
     for config in configs:
