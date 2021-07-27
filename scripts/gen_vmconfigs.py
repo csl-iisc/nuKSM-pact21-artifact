@@ -98,23 +98,15 @@ def rewrite_config(config):
 
     tree.write(src)
 
-def dump_vm_config_template(vm, configs):
-    print('dumping template XML from %s\'s current config...' %vm)
+def dump_vm_config(vm):
+    #print('dumping template XML from %s\'s current config...' %vm)
     cmd = 'virsh dumpxml %s' %vm
     dst = os.path.join(root, 'resources/vm_xmls/live')
     if not os.path.exists(dst):
         os.makedirs(dst)
-    dst = os.path.join(dst, 'template.xml')
+    dst = os.path.join(dst, vm + '.xml')
     cmd += '> %s' %dst
     os.system(cmd)
-    # -- copy into three files
-    src = dst
-    for config in configs:
-        dst = os.path.join(root, 'resources/vm_xmls/live')
-        dst = os.path.join(dst, config + '.xml')
-        cmd = 'cp %s %s '%(src, dst)
-        os.system(cmd)
-        #print(cmd)
 
 if __name__ == '__main__':
     parent_vm = 'ubuntu_nuksm_1'
@@ -122,7 +114,11 @@ if __name__ == '__main__':
         parent_vm = sys.argv[1]
 
     configs = ['ubuntu_nuksm_1', 'ubuntu_nuksm_2']
-    dump_vm_config_template(parent_vm, configs)
+
+    #dump_vm_config_template(parent_vm, configs)
+    dump_vm_config('ubuntu_nuksm_1')
+    dump_vm_config('ubuntu_nuksm_2')
+
     for config in configs:
         print('re-writing: ' + config+'.xml')
         rewrite_config(config)

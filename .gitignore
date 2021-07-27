@@ -8,6 +8,7 @@ benchmarks/btree/BTree
 benchmarks/XSBench/src/XSBench
 benchmarks/randomAccess/wl-randomreads-inputpages
 benchmarks/randomAccess/wl-randomreads-inputpages-2
+resources/vm_xmls/live
 
 # Prerequisites
 *.d
